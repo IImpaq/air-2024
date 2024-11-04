@@ -83,26 +83,21 @@
 
   \section{Dataset and Processing}
 
-  This section goes into detail regarding the sources of used data, as well as how such data is processed.
+  This section delves into the details of the sources and processing of used data.
 
   \subsection{Data Sources}
 
-  We are using the ``wykonos/movies'' dataset as our movie database.
-  It is loaded through Hugging Face.
-  The data set contains the following features:
-  id, title, genre, original language, overview, popularity, production companies, release date, budget / revenue, runtime, status, tagline, vote (avg) \& vote (count), credits, keywords.
-
-  We also need a provider for the captions/subtitles such that we can generate an informative summarization/recommendation based on the actual content of the movie.
-  This provider will be contacted and their data fetched through the backend of the system.
-  Such a feature should be easily implementable using a simple REST-API.
-  We are, at the time of writing this document, still searching for a cheap/free option to fullfill this requirement. (TODO)
+  Our movie database is sourced from the ``wykonos/movies'' dataset, which is loaded through Hugging Face.
+  The dataset comprises various features, including id, title, genre, original language, overview, popularity, production companies, release date, budget/revenue, runtime, status, tagline, average vote, vote count, credits, and keywords.\newline\newline
+  \noindent Additionally, we require a provider for captions/subtitles to generate informative summaries or recommendations based on the actual content of the movies.
+  This provider will be contacted, and their data fetched through the backend of the system.
+  This feature can be easily implemented using a simple REST-API. Currently, we are searching for a cost-effective or free option to fulfill this requirement. (TODO)
 
   \subsection{Data Processing}
 
-  Before using the dataset we need to pre-process it.
-  This is done through a data ``cleaning'' step.
-  During this procedure, the missing values (NaN) are replaced with empty strings to avoid future issues.
-  In the next step, each of the entries in the dataset is converted to strings.
+  Before utilizing the dataset, we need to preprocess it through a data ``cleaning'' step.
+  During this procedure, missing values (NaN) are replaced with empty strings to prevent future issues.
+  Subsequently, each entry in the dataset is converted to strings.
 
   \section{Methods and Models}
 
