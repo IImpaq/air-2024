@@ -101,7 +101,7 @@
 
   \section{Methods and Models}
 
-  This section tries to explain a technical deep dive of how our previously defined IR problem will be solved.
+  This section delves into the technical details of how our previously defined IR problem will be solved.
 
   \subsection{System Architecture}
 
@@ -109,22 +109,22 @@
 
   \subsection{Implementation}
 
-  The whole backend of the system will be implemented using python.
-  There are many useful libraries and tools which are helpful to work on the given problem, examples include but are not limited to: pytorch, pandas, numpy, scipy.
-  The first step is to perform the required input processing (encoding).
-  For that, an optimized transformer model will be used.
-  Afterwards, using the model generated using the tokenized input, we use mean pooling of the last hidden states for similarity computation later on.
-  Additionaly to the user input, also the the movie descriptions must be encoded.
-  This then allows for computation of a similarity measurement between user input and movie description (e.g. cosine similarity).
-  To provide the user only with the most relevant recommendations, a sophisticated ranking mechanism based on the similarity scores will be applied.
-  Now only the top 3 results, enriched using a variety of additional movie metadata and a summary/recommendation of the content can be shown to the user.
-  To provide the user with the summary we must first make a request to a caption/subtitle provider and then use the returned data in a summerization pipeline with an apprioriate model.
-  The recommendation will then be visualized in the frontend which will be implemented using a modern web technology stack, including but not limited to: NextJS.
-  The recommendation can then be evaluated by the user and in the case of dissatisfaction be re-evaluated by the model to update the recommendation using a selection of irrelevant movies by the user.
+  The entire backend of the system will be implemented using Python.
+  There are numerous useful libraries and tools that are beneficial for working on the given problem, such as PyTorch, Pandas, NumPy, and SciPy.
+  The initial step is to perform the necessary input processing (encoding).
+  For this purpose, an optimized transformer model will be utilized.
+  Subsequently, we will use the model generated from the tokenized input to perform mean pooling of the last hidden states for similarity computation later on.
+  In addition to the user input, we will also encode the movie descriptions.
+  This enables us to compute a similarity measurement between the user input and the movie description (for instance, using cosine similarity).
+  To provide the user with only the most relevant recommendations, a sophisticated ranking mechanism based on the similarity scores will be applied.
+  Only the top three results, enriched with various additional movie metadata and a summary/recommendation of the content, will be displayed to the user.
+  To generate the summary, we will first make a request to a caption/subtitle provider and then use the returned data in a summarization pipeline with an appropriate model.
+  The recommendation will then be visualized in the frontend, which will be implemented using a modern web technology stack, including but not limited to NextJS.
+  The recommendation can then be evaluated by the user, and in the case of dissatisfaction, it can be re-evaluated by the model to update the recommendation using a selection of irrelevant movies suggested by the user.
 
   \subsection{Optimization questions}
-  Due to the size of the dataset a variety of optimization questions come to mind.
-  This includes topics like memory management strategies, increased scalability using batch processing and hardware acceleration (CUDA/MPS)
+  Due to the size of the dataset, various optimization questions arise.
+  These include topics such as memory management strategies, enhanced scalability through batch processing and hardware acceleration (CUDA/MPS).
 
   \section{Evaluation}
   \subsection{Metrics}
