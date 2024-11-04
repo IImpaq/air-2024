@@ -64,9 +64,9 @@
   The focus of our work is to develop an advanced information retreival system for movie recommendations using a transformer-based architecture.
   To achieve this, our core component will be a combination of transformer models:
   \begin{itemize}
-    \item distilbert: to perform text encoding
-    \item BART: for text summarization
-    \item MiniLM: as a sentence transformer for semantic similarity
+    \item to perform text encoding
+    \item for text summarization
+    \item as a sentence transformer for semantic similarity
   \end{itemize}
 
   \noindent Technically, the retrieval pipeline will work approximately as follows:
@@ -82,10 +82,27 @@
   This should provide the highest quality recommendations with the least amount of effort from the user side.
 
   \section{Dataset and Processing}
+
+  This section goes into detail regarding the sources of used data, as well as how such data is processed.
+
   \subsection{Data Sources}
+
+  We are using the ``wykonos/movies'' dataset as our movie database.
+  It is loaded through Hugging Face.
+  The data set contains the following features:
+  id, title, genre, original language, overview, popularity, production companies, release date, budget / revenue, runtime, status, tagline, vote (avg) \& vote (count), credits, keywords.
+
+  We also need a provider for the captions/subtitles such that we can generate an informative summarization/recommendation based on the actual content of the movie.
+  This provider will be contacted and their data fetched through the backend of the system.
+  Such a feature should be easily implementable using a simple REST-API.
+  We are, at the time of writing this document, still searching for a cheap/free option to fullfill this requirement. (TODO)
 
   \subsection{Data Processing}
 
+  Before using the dataset we need to pre-process it.
+  This is done through a data ``cleaning'' step.
+  During this procedure, the missing values (NaN) are replaced with empty strings to avoid future issues.
+  In the next step, each of the entries in the dataset is converted to strings.
 
   \section{Methods and Models}
 
