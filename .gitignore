@@ -1,1 +1,5 @@
+# IDE related folders
 .idea/
+
+# LaTeX related folders
+design-document/out/
