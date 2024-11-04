@@ -61,7 +61,25 @@
 
   \section{Main Task}
 
-  
+  The focus of our work is to develop an advanced information retreival system for movie recommendations using a transformer-based architecture.
+  To achieve this, our core component will be a combination of transformer models:
+  \begin{itemize}
+    \item distilbert: to perform text encoding
+    \item BART: for text summarization
+    \item MiniLM: as a sentence transformer for semantic similarity
+  \end{itemize}
+
+  \noindent Technically, the retrieval pipeline will work approximately as follows:
+  \begin{itemize}
+    \item Processing the user query regarding their preferences.
+    \item Document encoding of the movie preferences retreived from the dataset
+    \item Computing the similarity of the encoded user query and the encoded movie document
+    \item Ranking the results based on relevance to the user
+  \end{itemize}
+
+  \noindent After the first phase of the retrieval pipeline is finished the user can choose if they are satisfied with the result or they can select irrelevant recommendations.
+  If a selection of irrelevant content is made, the system will adapt and provide a new selection based on the changing requirements.
+  This should provide the highest quality recommendations with the least amount of effort from the user side.
 
   \section{Dataset and Processing}
   \subsection{Data Sources}
