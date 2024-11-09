@@ -93,10 +93,7 @@
 
   Our movie database is sourced from the ``wykonos/movies'' dataset, which is loaded through Hugging Face.
   The dataset comprises various features, including id, title, genre, original language, overview, popularity, production companies, release date, budget/revenue, runtime, status, tagline, average vote, vote count, credits, and keywords.\newline\newline
-  \noindent Additionally, we require a provider for captions/subtitles to generate informative summaries or recommendations based on the actual content of the movies.
-  This provider will be contacted, and their data fetched through the backend of the system.
-  This feature can be easily implemented using a simple REST-API. Currently, we are searching for a cost-effective or free option to fulfill this requirement. (TODO)
-
+  \noindent Additionally, we plan to use a provider like OpenSubtitles to obtain captions and subtitles, allowing us to generate informative summaries or recommendations based on the actual movie content. The provider’s data would be fetched through the backend via a REST API. While OpenSubtitles is one option under consideration, we are still evaluating cost-effective or free alternatives to determine the best fit for our needs.
   \subsection{Data Processing}
 
   Before utilizing the dataset, we need to preprocess it through a data ``cleaning'' step.
