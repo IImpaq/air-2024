@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.glass-morphism {
-  @apply bg-gray-800/50 backdrop-blur-xl;
-}
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
