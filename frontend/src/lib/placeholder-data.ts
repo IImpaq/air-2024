@@ -1,4 +1,4 @@
-export const placeholderMovies = [
+export const movies = [
   {
     id: '1',
     title: 'Inception',
