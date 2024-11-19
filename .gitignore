@@ -3,3 +3,5 @@
 
 # LaTeX related folders
 design-document/out/
+
+.DS_STORE
