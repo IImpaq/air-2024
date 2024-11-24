@@ -128,8 +128,9 @@ const EraStep = ({value, onChange}: EraStepProps) => {
                      }}
                 >
                   <motion.div
-                      className={`w-3 h-3 rounded-full -mt-1 ${(value === era.id || value === "any") ? "bg-slate-900" : "bg-slate-400"}`}
+                      className={`w-3 h-3 cursor-pointer rounded-full -mt-1 ${(value === era.id || value === "any") ? "bg-slate-900" : "bg-slate-400"}`}
                       whileHover={{scale: 1.2}}
+                      onClick={() => onChange(era.id)}
                   />
                   <span className="text-xs text-slate-600 whitespace-nowrap mt-2">
                     {era.years}
