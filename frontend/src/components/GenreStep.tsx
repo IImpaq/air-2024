@@ -9,7 +9,7 @@ import {
   HiMap, HiMusicalNote,
   HiPaintBrush, HiRocketLaunch, HiShieldCheck,
   HiShieldExclamation, HiSparkles, HiSun,
-  HiVideoCamera, HiPuzzlePiece, HiOutlineClipboardDocumentList, HiTrophy, HiBell
+  HiVideoCamera, HiPuzzlePiece, HiOutlineClipboardDocumentList, HiTrophy, HiBell, HiPencil, HiIdentification
 } from "react-icons/hi2";
 
 interface GenreStepProps {
@@ -33,6 +33,14 @@ export const GenreStep = ({selectedGenres, onGenreToggle}: GenreStepProps) => {
     {
       name: "Animation",
       icon: <HiPaintBrush className="w-5 h-5"/>
+    },
+    {
+      name: "Anime",
+      icon: <HiPencil className="w-5 h-5"/>
+    },
+    {
+      name: "Biography",
+      icon: <HiIdentification className="w-5 h-5"/>
     },
     {
       name: "Comedy",
@@ -60,7 +68,7 @@ export const GenreStep = ({selectedGenres, onGenreToggle}: GenreStepProps) => {
     },
     {
       name: "Game Show",
-      icon: <HiOutlineClipboardDocumentList className="w-5 h-5" />
+      icon: <HiOutlineClipboardDocumentList className="w-5 h-5"/>
     },
     {
       name: "Historical",
@@ -88,14 +96,14 @@ export const GenreStep = ({selectedGenres, onGenreToggle}: GenreStepProps) => {
     },
     {
       name: "Seasonal",
-      icon: <HiBell className="w-5 h-5" />
+      icon: <HiBell className="w-5 h-5"/>
     },
     {
       name: "Science Fiction",
       icon: <HiRocketLaunch className="w-5 h-5"/>
     },
     {
-      name: "Sport",
+      name: "Sports",
       icon: <HiTrophy className="w-5 h-5"/>
     },
     {

@@ -125,10 +125,6 @@ const Home = () => {
             )}
           </AnimatePresence>
         </div>
-
-        <div
-            className="fixed bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
-        />
       </main>
   );
 };
