@@ -3,12 +3,12 @@
 import {useState} from "react";
 import {motion} from "framer-motion";
 
-interface EraSelectionProps {
+interface EraStepProps {
   value: string;
   onChange: (era: string) => void;
 }
 
-const EraSelection = ({value, onChange}: EraSelectionProps) => {
+const EraStep = ({value, onChange}: EraStepProps) => {
   const [hoveredEra, setHoveredEra] = useState<string | null>(null);
 
   // Information is mostly sourced from Wikipedia:
@@ -134,4 +134,4 @@ const EraSelection = ({value, onChange}: EraSelectionProps) => {
   );
 }
 
-export default EraSelection;
+export default EraStep;

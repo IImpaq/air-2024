@@ -4,7 +4,7 @@ import {useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 import {HiOutlineFilm} from "react-icons/hi";
 import PreferenceForm from "@/components/PreferenceForm";
-import MovieResults from "@/components/MovieResults";
+import ResultsStep from "@/components/ResultsStep";
 import {movies} from "@/lib/placeholder-data";
 
 const Home = () => {
@@ -105,7 +105,7 @@ const Home = () => {
                       <p className="text-slate-600">Based on your preferences, we think you&#39;ll love these films</p>
                     </motion.div>
 
-                    <MovieResults movies={movies}/>
+                    <ResultsStep movies={movies}/>
 
                     <motion.div initial={{y: 20, opacity: 0}}
                                 animate={{y: 0, opacity: 1}}

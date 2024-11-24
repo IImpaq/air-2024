@@ -6,11 +6,11 @@ import {motion, AnimatePresence} from "framer-motion";
 import {Movie} from "@/lib/types";
 import AILoadingAnimation from "@/components/LoadingAnimation";
 
-interface MovieResultsProps {
+interface ResultsStep {
   movies: Movie[];
 }
 
-const MovieResults = ({movies}: MovieResultsProps) => {
+const ResultsStep = ({movies}: ResultsStep) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showSummary, setShowSummary] = useState<string | null>(null);
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
@@ -176,4 +176,4 @@ const MovieResults = ({movies}: MovieResultsProps) => {
   );
 }
 
-export default MovieResults;
+export default ResultsStep;

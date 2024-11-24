@@ -5,8 +5,8 @@ import {HiOutlineEmojiHappy, HiOutlineGlobe} from "react-icons/hi";
 import {HiOutlineClock, HiOutlinePencil, HiOutlineTag} from "react-icons/hi2";
 import {motion, AnimatePresence} from "framer-motion";
 import {PreferenceStep} from "@/lib/types";
-import LanguageSelection from "@/components/LanguageSelection";
-import EraSelection from "@/components/EraSelection";
+import LanguageStep from "@/components/LanguageStep";
+import EraStep from "@/components/EraStep";
 import GenreStep from "@/components/GenreStep";
 import MoodStep from "@/components/MoodStep";
 import NotesStep from "@/components/NotesStep";
@@ -122,14 +122,14 @@ const PreferenceForm = ({onSubmit}: PreferenceFormProps) => {
               )}
 
               {step === 3 && (
-                  <EraSelection value={preferences.era}
-                                onChange={(era) => setPreferences(prev => ({...prev, era}))}
+                  <EraStep value={preferences.era}
+                           onChange={(era) => setPreferences(prev => ({...prev, era}))}
                   />
               )}
 
               {step === 4 && (
-                  <LanguageSelection value={preferences.language}
-                                     onChange={(language) => setPreferences(prev => ({
+                  <LanguageStep value={preferences.language}
+                                onChange={(language) => setPreferences(prev => ({
                                        ...prev,
                                        language
                                      }))}

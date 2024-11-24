@@ -12,12 +12,12 @@ import {
 import {motion} from "framer-motion";
 import {LanguageOption} from "@/lib/types";
 
-interface LanguageSelectionProps {
+interface LanguageStepProps {
   value: string;
   onChange: (id: string) => void;
 }
 
-const LanguageSelection = ({value, onChange}: LanguageSelectionProps) => {
+const LanguageStep = ({value, onChange}: LanguageStepProps) => {
   const [hoveredOption, setHoveredOption] = useState<string | null>(null);
 
   const options: LanguageOption[] = [
@@ -106,4 +106,4 @@ const LanguageSelection = ({value, onChange}: LanguageSelectionProps) => {
   );
 }
 
-export default LanguageSelection;
+export default LanguageStep;
