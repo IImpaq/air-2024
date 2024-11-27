@@ -14,7 +14,7 @@ interface GetMovieRecommendationsResponse {
 
 export const getMovieRecommendation = async (body: GetMovieRecommendationsInput): Promise<GetMovieRecommendationsResponse | null> => {
     const baseUrl = "http://127.0.0.1:8000"
-    const endpoint = "/movieDescription"
+    const endpoint = "/movieRecommendation"
     try {
         console.log("getMovieRecommendation", body);
         const response = await fetch(baseUrl + endpoint, {

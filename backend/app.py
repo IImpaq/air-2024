@@ -16,12 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class GetMovieRecommendationsInput(BaseModel):
-   mood: str
-   era: str
-   language: str
-   additionalNotes: str
-   genres: list[str]
+
 
 class GetMovieDescriptionInput(BaseModel):
     name: str
@@ -33,10 +28,18 @@ class GetMovieDescriptionInput(BaseModel):
 def read_root():
     return {"Advanced": "Information Retrieval"}
 
+class GetMovieRecommendationsInput(BaseModel):
+    mood: str
+    era: str
+    language: str
+    additionalNotes: str
+    genres: list[str]
+
 @app.post("/movieRecommendation")
 def movie_recommendation(input: GetMovieRecommendationsInput):
-    print("movieRecommendation with data:", input)
-    return {"recommendations": moviesMock}
+    print("movieRecommendation with data:", input.dict())
+    recommended_movies = moviesMock
+    return {"movies": recommended_movies}
 
 @app.post("/movieDescription")
 def movie_description(input: GetMovieDescriptionInput):
