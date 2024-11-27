@@ -1,4 +1,4 @@
-export const movies = [
+export const deprecated_movies = [
   {
     id: '1',
     title: 'Inception',

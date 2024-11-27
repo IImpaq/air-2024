@@ -5,11 +5,32 @@ import {motion, AnimatePresence} from "framer-motion";
 import {HiOutlineFilm} from "react-icons/hi";
 import PreferenceForm from "@/components/PreferenceForm";
 import ResultsStep from "@/components/ResultsStep";
-import {movies} from "@/lib/placeholder-data";
+import {Movie, PreferenceStep} from "@/lib/types";
+import {getMovieRecommendation} from "@/api/getMovieRecommendations";
 
 const Home = () => {
   const [step, setStep] = useState<"landing" | "preferences" | "results">("landing");
+  const [movies, setMovies] = useState<Movie[]>([]);
 
+  const onSubmit = async (preferences: PreferenceStep) => {
+      const response = await getMovieRecommendation({
+          genres: preferences.genres,
+          mood: preferences.mood,
+          language: preferences.language,
+          additionalNotes: preferences.additionalNotes,
+          era: preferences.era
+      });
+
+      if(response == null){
+          // handle error case
+          return;
+      }
+
+      const movies = response?.movies ?? [];
+      setMovies(movies);
+      setStep("results");
+
+  }
   return (
       <main className="min-h-screen bg-slate-50 relative overflow-hidden">
         <div className="container mx-auto px-4 py-16 relative">
@@ -82,7 +103,7 @@ const Home = () => {
                     >
                       Tell us your preferences
                     </motion.h2>
-                    <PreferenceForm onSubmit={() => setStep("results")}/>
+                    <PreferenceForm onSubmit={async (pref) => onSubmit(pref)}/>
                   </div>
                 </motion.div>
             )}

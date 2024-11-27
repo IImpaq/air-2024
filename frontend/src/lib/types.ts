@@ -23,3 +23,5 @@ export interface Movie {
   duration?: string;
   summary?: string;
 }
+
+
