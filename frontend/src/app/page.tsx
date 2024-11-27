@@ -11,6 +11,7 @@ import {getMovieRecommendation} from "@/api/getMovieRecommendations";
 const Home = () => {
   const [step, setStep] = useState<"landing" | "preferences" | "results">("landing");
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [showError, setShowError] = useState(false);
 
   const onSubmit = async (preferences: PreferenceStep) => {
       const response = await getMovieRecommendation({
@@ -24,6 +25,7 @@ const Home = () => {
       console.log(preferences);
 
       if(response == null){
+          setShowError(true);
           return;
       }
 
@@ -106,6 +108,23 @@ const Home = () => {
                     </motion.h2>
                     <PreferenceForm onSubmit={async (pref) => onSubmit(pref)}/>
                   </div>
+                    {showError && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
+                        >
+                            <span>Fehler beim Abrufen von Filmempfehlungen. Bitte versuchen Sie es erneut.</span>
+                            <button
+                                onClick={() => setShowError(false)}
+                                className="ml-4 underline"
+                            >
+                                Schließen
+                            </button>
+                        </motion.div>
+                    )}
                 </motion.div>
             )}
 

@@ -17,6 +17,8 @@ const ResultsStep = ({movies}: ResultsStep) => {
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
   const [currentSummary, setCurrentSummary] = useState<string | null>(null);
   const [currentGenres, setCurrentGenres] = useState<string[]| null>([]);
+  const [showError, setShowError] = useState(false);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -48,7 +50,7 @@ const ResultsStep = ({movies}: ResultsStep) => {
       year: movie.year,
     })
     if(!response){
-      // error case
+      setShowError(true);
       return;
     }
     setCurrentSummary(response?.summary ?? null)
@@ -106,6 +108,23 @@ const ResultsStep = ({movies}: ResultsStep) => {
                                     <HiOutlineClipboardDocumentList className="w-6 h-6"/>
                                   </motion.button>
                                 </div>
+                                {showError && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
+                                    >
+                                      <span>Fehler beim Abrufen der Detail Ansicht. Bitte versuchen Sie es erneut.</span>
+                                      <button
+                                          onClick={() => setShowError(false)}
+                                          className="ml-4 underline"
+                                      >
+                                        Schließen
+                                      </button>
+                                    </motion.div>
+                                )}
                               </motion.div>
                           )}
 
