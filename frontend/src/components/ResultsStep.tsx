@@ -5,6 +5,7 @@ import {HiStar, HiPlay, HiOutlineClipboardDocumentList, HiXMark} from "react-ico
 import {motion, AnimatePresence} from "framer-motion";
 import {Movie} from "@/lib/types";
 import AILoadingAnimation from "@/components/LoadingAnimation";
+import {getMovieDescription} from "@/api/getMovieDescription";
 
 interface ResultsStep {
   movies: Movie[];
@@ -14,6 +15,8 @@ const ResultsStep = ({movies}: ResultsStep) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showSummary, setShowSummary] = useState<string | null>(null);
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
+  const [currentSummary, setCurrentSummary] = useState<string | null>(null);
+  const [currentGenres, setCurrentGenres] = useState<string[]| null>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,10 +39,21 @@ const ResultsStep = ({movies}: ResultsStep) => {
     show: {opacity: 1, y: 0}
   };
 
-  const handleShowSummary = async (movideID: string) => {
-    setShowSummary(movideID);
+  const handleShowSummary = async (movie:Movie) => {
+    setShowSummary(movie.id);
     setIsGeneratingSummary(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    const response = await getMovieDescription({
+      id: movie.id,
+      title: movie.title,
+      year: movie.year,
+    })
+    if(!response){
+      // error case
+      return;
+    }
+    setCurrentSummary(response?.summary ?? null)
+    setCurrentGenres(response?.genre ?? null)
+
     setIsGeneratingSummary(false);
   };
 
@@ -86,7 +100,7 @@ const ResultsStep = ({movies}: ResultsStep) => {
                                   </motion.button>
                                   <motion.button whileHover={{scale: 1.1}}
                                                  whileTap={{scale: 0.95}}
-                                                 onClick={() => handleShowSummary(movie.id)}
+                                                 onClick={() => handleShowSummary(movie)}
                                                  className="p-3 rounded-full bg-white/20 text-white backdrop-blur-sm"
                                   >
                                     <HiOutlineClipboardDocumentList className="w-6 h-6"/>
@@ -143,15 +157,16 @@ const ResultsStep = ({movies}: ResultsStep) => {
                                     </div>
                                 ) : (
                                     <>
-                                      <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                                        This groundbreaking film masterfully weaves together elements of
-                                        drama and suspense, creating a narrative that resonates deeply
-                                        with contemporary audiences.
-                                      </p>
+                                        { currentSummary && (
+                                          <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                                            {currentSummary}
+                                          </p>
+                                        )
+                                      }
                                       <div className="space-y-2">
                                         <h4 className="font-medium text-slate-700 text-sm">Key Themes</h4>
                                         <div className="flex flex-wrap gap-2">
-                                          {["Identity", "Redemption", "Love", "Conflict"].map(theme => (
+                                          {currentGenres && currentGenres.map(theme => (
                                               <span
                                                   key={theme}
                                                   className="px-2.5 py-1 bg-slate-200 rounded-full text-xs text-slate-600"

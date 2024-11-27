@@ -1,11 +1,12 @@
 interface GetMovieDescriptionInput {
-    name: string;
     id: string;
+    title: string;
+    year: number;
 }
 
 interface GetMovieDescriptionResponse {
-    name: string;
-    id: string;
+    genre: string[];
+    summary: string;
 }
 
 export const getMovieDescription = async (body: GetMovieDescriptionInput): Promise<GetMovieDescriptionResponse | null> => {

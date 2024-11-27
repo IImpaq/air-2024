@@ -2,8 +2,8 @@ from typing import Union
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from mockData import moviesMock
-
+from service import proceedMovieRecommendation, proceedMovieDescription
+from inputTypes import GetMovieRecommendationsInput, GetMovieDescriptionInput
 
 app = FastAPI()
 
@@ -17,31 +17,19 @@ app.add_middleware(
 )
 
 
-
-class GetMovieDescriptionInput(BaseModel):
-    name: str
-    id: str
-
-
-
 @app.get("/")
 def read_root():
     return {"Advanced": "Information Retrieval"}
 
-class GetMovieRecommendationsInput(BaseModel):
-    mood: str
-    era: str
-    language: str
-    additionalNotes: str
-    genres: list[str]
-
 @app.post("/movieRecommendation")
 def movie_recommendation(input: GetMovieRecommendationsInput):
-    print("movieRecommendation with data:", input.dict())
-    recommended_movies = moviesMock
+    print("movieRecommendation with body:", input.dict())
+    recommended_movies = proceedMovieRecommendation(input)
     return {"movies": recommended_movies}
 
 @app.post("/movieDescription")
 def movie_description(input: GetMovieDescriptionInput):
-    print("movieRecommendation with data:", input.name, input.id)
-    return {"name": input.name, "id": input.id, "recommendations": ["Movie1", "Movie2", "Movie3"]}
+    print("movieDescription with body:", input.dict())
+    movie_description = proceedMovieDescription(input)
+    print(movie_description)
+    return {"genre": movie_description["genre"], "summary": movie_description["summary"]}

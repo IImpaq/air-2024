@@ -28,3 +28,8 @@ moviesMock = [
         "rating": 8.4
     }
 ]
+
+descriptionMock = {
+    "genre": ["Adventure", "Mystery", "Fantasy"],
+    "summary": "A young hero sets out on a daring quest to uncover ancient secrets hidden within forgotten lands. Along the way, they face formidable challenges, encounter unexpected allies, and confront their deepest fears. The journey tests their courage, wit, and determination, revealing truths about the past that could change the future. As they unravel the mysteries, the hero discovers the strength within themselves to overcome adversity and fulfill their destiny."
+}

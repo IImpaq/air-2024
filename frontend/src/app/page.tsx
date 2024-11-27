@@ -24,7 +24,6 @@ const Home = () => {
       console.log(preferences);
 
       if(response == null){
-          // handle error case
           return;
       }
 
