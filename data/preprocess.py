@@ -9,7 +9,7 @@ def main():
 
     #df = pd.read_csv("hf://datasets/wykonos/movies/movies_dataset.csv") # could be loaded directely but too slow
 
-    df = pd.read_csv("../data/movies_dataset.csv")
+    df = pd.read_csv("movies_dataset.csv")
 
     df = drop_columns(df)
 
