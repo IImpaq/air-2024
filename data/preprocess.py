@@ -2,12 +2,10 @@ import pandas as pd
 import os
 import time
 
-COLUMNS = ['id', 'title', 'genres', 'original_language', 'overview', 'popularity', 'release_date', 'status', 'keywords']
+COLUMNS = ['id', 'title', 'genres', 'original_language', 'overview', 'popularity', 'release_date', 'status', 'keywords', 'poster_path']
 
 def main():
     print("Starting preprocessing")
-
-    #df = pd.read_csv("hf://datasets/wykonos/movies/movies_dataset.csv") # could be loaded directely but too slow
 
     df = pd.read_csv("movies_dataset.csv")
 
@@ -23,7 +21,7 @@ def main():
 
     print_details(df)
 
-    df.to_csv('../data/movies_dataset_preprocessed')
+    df.to_csv('movies_dataset_preprocessed.csv')
 
     
 
