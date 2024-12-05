@@ -1,32 +1,64 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {HiStar, HiPlay, HiOutlineClipboardDocumentList, HiXMark} from "react-icons/hi2";
 import {motion, AnimatePresence} from "framer-motion";
-import {Movie} from "@/lib/types";
+import {Movie, PreferenceStep} from "@/lib/types";
 import AILoadingAnimation from "@/components/LoadingAnimation";
 import {getMovieDescription} from "@/api/getMovieDescription";
+import {getMovieRecommendation} from "@/api/getMovieRecommendations";
 
 interface ResultsStep {
-  movies: Movie[];
+  pref: PreferenceStep;
 }
 
-const ResultsStep = ({movies}: ResultsStep) => {
+const ResultsStep = ({pref}: ResultsStep) => {
   const [isLoading, setIsLoading] = useState(true);
+  const isRequestInProgress = useRef(false);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [showSummary, setShowSummary] = useState<string | null>(null);
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
   const [currentSummary, setCurrentSummary] = useState<string | null>(null);
   const [currentGenres, setCurrentGenres] = useState<string[]| null>([]);
   const [showError, setShowError] = useState(false);
 
-
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
+    const fetchMovies = async () => {
+      if (!isLoading || isRequestInProgress.current) return;
 
-    return () => clearTimeout(timer);
-  }, []);
+      isRequestInProgress.current = true;
+
+      try {
+        const response = await getMovieRecommendation({
+          genres: pref.genres,
+          mood: pref.mood,
+          language: pref.language,
+          additionalNotes: pref.additionalNotes,
+          era: pref.era
+        });
+
+        if (response == null) {
+          setShowError(true);
+          return;
+        }
+
+        const movies = response?.movies ?? [];
+
+        for(let i = 0; i < movies.length; i++) {
+          movies[i].id = i + movies[i].title + movies[i].year;
+        }
+
+        setMovies(movies);
+      } catch (error) {
+        setShowError(true);
+      } finally {
+        setIsLoading(false);
+        isRequestInProgress.current = false;
+      }
+    }
+
+    fetchMovies();
+  }, [isLoading, pref]);
 
   const container = {
     hidden: {opacity: 0},
@@ -70,7 +102,7 @@ const ResultsStep = ({movies}: ResultsStep) => {
             {isLoading ? (
                 <AILoadingAnimation/>
             ) : (
-                movies.map((movie) => (
+                movies.map((movie, index) => (
                     <motion.div key={movie.id}
                                 variants={item}
                                 className={`relative group ${showSummary === movie.id ? "lg:col-span-2 lg:row-span-2" : ""}`}
@@ -83,7 +115,7 @@ const ResultsStep = ({movies}: ResultsStep) => {
                             layoutId={`image-${movie.id}`}
                             transition={{duration: 0.3, ease: "easeInOut"}}
                         >
-                          <img src={movie.poster}
+                          <img src={"https://image.tmdb.org/t/p/w500" + movie.poster}
                                alt={movie.title}
                                className="w-full h-full object-cover"
                           />
@@ -128,7 +160,7 @@ const ResultsStep = ({movies}: ResultsStep) => {
                               </motion.div>
                           )}
 
-                          <motion.div layoutId={`info-${movie.id}`}
+                          <motion.div layoutId={`info-${movie.title}-${movie.id}`}
                                       transition={{duration: 0.3, ease: "easeInOut"}}
                                       className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-slate-900"
                           >
@@ -187,7 +219,7 @@ const ResultsStep = ({movies}: ResultsStep) => {
                                         <div className="flex flex-wrap gap-2">
                                           {currentGenres && currentGenres.map(theme => (
                                               <span
-                                                  key={theme}
+                                                  key={movie.title + theme}
                                                   className="px-2.5 py-1 bg-slate-200 rounded-full text-xs text-slate-600"
                                               >
                                                 {theme}

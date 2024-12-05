@@ -5,35 +5,13 @@ import {motion, AnimatePresence} from "framer-motion";
 import {HiOutlineFilm} from "react-icons/hi";
 import PreferenceForm from "@/components/PreferenceForm";
 import ResultsStep from "@/components/ResultsStep";
-import {Movie, PreferenceStep} from "@/lib/types";
-import {getMovieRecommendation} from "@/api/getMovieRecommendations";
+import {PreferenceStep} from "@/lib/types";
 
 const Home = () => {
   const [step, setStep] = useState<"landing" | "preferences" | "results">("landing");
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [preferences, setPreferences] = useState<PreferenceStep | null>(null);
   const [showError, setShowError] = useState(false);
 
-  const onSubmit = async (preferences: PreferenceStep) => {
-      const response = await getMovieRecommendation({
-          genres: preferences.genres,
-          mood: preferences.mood,
-          language: preferences.language,
-          additionalNotes: preferences.additionalNotes,
-          era: preferences.era
-      });
-
-      console.log(preferences);
-
-      if(response == null){
-          setShowError(true);
-          return;
-      }
-
-      const movies = response?.movies ?? [];
-      setMovies(movies);
-      setStep("results");
-
-  }
   return (
       <main className="min-h-screen bg-slate-50 relative overflow-hidden">
         <div className="container mx-auto px-4 py-16 relative">
@@ -106,7 +84,10 @@ const Home = () => {
                     >
                       Tell us your preferences
                     </motion.h2>
-                    <PreferenceForm onSubmit={async (pref) => onSubmit(pref)}/>
+                    <PreferenceForm onSubmit={(pref) => {
+                      setPreferences(pref);
+                      setStep("results");
+                    }}/>
                   </div>
                     {showError && (
                         <motion.div
@@ -146,7 +127,7 @@ const Home = () => {
                       <p className="text-slate-600">Based on your preferences, we think you&#39;ll love these films</p>
                     </motion.div>
 
-                    <ResultsStep movies={movies}/>
+                    <ResultsStep pref={preferences}/>
 
                     <motion.div initial={{y: 20, opacity: 0}}
                                 animate={{y: 0, opacity: 1}}
@@ -159,6 +140,15 @@ const Home = () => {
                                      className="px-8 py-4 bg-slate-100 text-slate-700 rounded-2xl hover:bg-slate-200 transition-all duration-300"
                       >
                         Refine Selection
+                      </motion.button>
+                      <motion.button whileHover={{scale: 1.02}}
+                                     whileTap={{scale: 0.98}}
+                                     onClick={() => {
+                                       setStep("landing");
+                                     }}
+                                     className="px-8 py-4 bg-slate-900 text-white rounded-2xl hover:bg-slate-800 transition-all duration-300 ml-4"
+                                     >
+                        Go Home
                       </motion.button>
                     </motion.div>
                   </div>
