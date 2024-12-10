@@ -1,16 +1,12 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
-  HiDocumentText,
-  HiGlobeAlt,
-  HiGlobeEuropeAfrica,
-  HiHome,
-  HiLanguage,
-  HiSpeakerWave
+  HiLanguage
 } from "react-icons/hi2";
 import {motion} from "framer-motion";
 import {LanguageOption} from "@/lib/types";
+import {getAvailableLanguages} from "@/api/getAvailableLanguages";
 
 interface LanguageStepProps {
   value: string;
@@ -19,45 +15,26 @@ interface LanguageStepProps {
 
 const LanguageStep = ({value, onChange}: LanguageStepProps) => {
   const [hoveredOption, setHoveredOption] = useState<string | null>(null);
+  const [options, setOptions] = useState<LanguageOption[]>([]);
 
-  const options: LanguageOption[] = [
-    {
-      id: 'english_original',
-      label: 'English Original',
-      description: 'Films originally produced in English',
-      icon: <HiLanguage className="w-5 h-5"/>,
-    },
-    {
-      id: 'original_subtitled',
-      label: 'Original with Subtitles',
-      description: 'Films in their original language with subtitles',
-      icon: <HiDocumentText className="w-5 h-5"/>,
-    },
-    {
-      id: 'dubbed',
-      label: 'Dubbed',
-      description: 'Films with voice-overs in your preferred language',
-      icon: <HiSpeakerWave className="w-5 h-5"/>,
-    },
-    {
-      id: 'multilingual',
-      label: 'Multilingual',
-      description: 'Films featuring multiple languages',
-      icon: <HiGlobeAlt className="w-5 h-5"/>,
-    },
-    {
-      id: 'local',
-      label: 'Local Language',
-      description: 'Films in your primary language only',
-      icon: <HiHome className="w-5 h-5"/>,
-    },
-    {
-      id: 'any',
-      label: 'All Languages',
-      description: 'Open to all languages & translations',
-      icon: <HiGlobeEuropeAfrica className="w-5 h-5"/>,
-    }
-  ];
+  // Fetch languages from getAvailableLanguages() once on first time
+  useEffect(() => {
+    getAvailableLanguages().then(response => {
+      if (response) {
+        console.log("Available Languages:", response.languages);
+        setOptions(response.languages.map((language) => {
+          const languageLabel = new Intl.DisplayNames(['en'], {type: 'language'}).of(language)?.toString() || language;
+
+          return {
+            id: language,
+            label: languageLabel,
+            description: `Films originally produced in ${languageLabel}`,
+            icon: <HiLanguage className="w-5 h-5"/>,
+          };
+        }));
+      }
+    });
+  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
