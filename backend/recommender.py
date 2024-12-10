@@ -196,7 +196,9 @@ class MovieRecommender:
         era_range = self._era_ranges.get(preferences.era)
 
         # Pre-Filter based on trivial criteria to reduce the dataset size
-        # TODO: Leaving out language filter for now. Might improve language selection in frontend later
+        # TODO: Might improve language selection in frontend later
+        # TODO: Add support for selection of multiple languages
+        # TODO: Add support for selecting any language
         filtered_df = self.dataset[
             (self.dataset["original_language"] == preferences.language) &
             (self.dataset["release_year"].between(era_range[0], era_range[1])) &
