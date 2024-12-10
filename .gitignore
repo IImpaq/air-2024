@@ -3,6 +3,7 @@
 
 # LaTeX related folders
 design-document/out/
+report/out/
 
 # Ignore macOS related files/folders
 .DS_STORE
