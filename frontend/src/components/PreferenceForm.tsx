@@ -1,15 +1,16 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {HiOutlineEmojiHappy, HiOutlineGlobe} from "react-icons/hi";
-import {HiOutlineClock, HiOutlinePencil, HiOutlineTag} from "react-icons/hi2";
+import {HiLanguage, HiOutlineClock, HiOutlinePencil, HiOutlineTag} from "react-icons/hi2";
 import {motion, AnimatePresence} from "framer-motion";
-import {PreferenceStep} from "@/lib/types";
+import {LanguageOption, PreferenceStep} from "@/lib/types";
 import LanguageStep from "@/components/LanguageStep";
 import EraStep from "@/components/EraStep";
 import GenreStep from "@/components/GenreStep";
 import MoodStep from "@/components/MoodStep";
 import NotesStep from "@/components/NotesStep";
+import {getAvailableLanguages} from "@/api/getAvailableLanguages";
 
 interface PreferenceFormProps {
   onSubmit: (preferences: PreferenceStep) => void;
@@ -24,6 +25,27 @@ const PreferenceForm = ({onSubmit}: PreferenceFormProps) => {
     language: "",
     additionalNotes: ""
   });
+  const [languages, setLanguages] = useState<LanguageOption[]>([]);
+
+  // Fetch languages from getAvailableLanguages() once on first time
+  useEffect(() => {
+    getAvailableLanguages().then(response => {
+      if (response) {
+        const sortedLanguages = response.languages.sort((a, b) => a.localeCompare(b));
+
+        setLanguages(sortedLanguages.map((language) => {
+          const languageLabel = new Intl.DisplayNames(['en'], {type: 'language'}).of(language)?.toString() || language;
+
+          return {
+            id: language,
+            label: languageLabel,
+            description: `Films originally produced in ${languageLabel}`,
+            icon: <HiLanguage className="w-5 h-5"/>,
+          };
+        }));
+      }
+    });
+  }, []);
 
   const stepDetails = [
     {
@@ -128,7 +150,7 @@ const PreferenceForm = ({onSubmit}: PreferenceFormProps) => {
               )}
 
               {step === 4 && (
-                  <LanguageStep value={preferences.language}
+                  <LanguageStep languages={languages} value={preferences.language}
                                 onChange={(language) => setPreferences(prev => ({
                                        ...prev,
                                        language

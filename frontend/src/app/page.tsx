@@ -89,23 +89,23 @@ const Home = () => {
                       setStep("results");
                     }}/>
                   </div>
-                    {showError && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.3 }}
-                            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
+                  {showError && (
+                      <motion.div
+                          initial={{opacity: 0, y: 20}}
+                          animate={{opacity: 1, y: 0}}
+                          exit={{opacity: 0, y: -20}}
+                          transition={{duration: 0.3}}
+                          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
+                      >
+                        <span>Fehler beim Abrufen von Filmempfehlungen. Bitte versuchen Sie es erneut.</span>
+                        <button
+                            onClick={() => setShowError(false)}
+                            className="ml-4 underline"
                         >
-                            <span>Fehler beim Abrufen von Filmempfehlungen. Bitte versuchen Sie es erneut.</span>
-                            <button
-                                onClick={() => setShowError(false)}
-                                className="ml-4 underline"
-                            >
-                                Schließen
-                            </button>
-                        </motion.div>
-                    )}
+                          Schließen
+                        </button>
+                      </motion.div>
+                  )}
                 </motion.div>
             )}
 
@@ -147,7 +147,7 @@ const Home = () => {
                                        setStep("landing");
                                      }}
                                      className="px-8 py-4 bg-slate-900 text-white rounded-2xl hover:bg-slate-800 transition-all duration-300 ml-4"
-                                     >
+                      >
                         Go Home
                       </motion.button>
                     </motion.div>
