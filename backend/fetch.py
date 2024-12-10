@@ -3,7 +3,7 @@ from datasets import load_dataset
 
 def main():
     dataset = load_dataset("wykonos/movies")
-    dataset['train'].to_csv("movies_dataset.csv", index=False)
+    dataset['train'].to_csv("../data/movies_dataset.csv", index=False)
 
 
 if __name__=="__main__":
