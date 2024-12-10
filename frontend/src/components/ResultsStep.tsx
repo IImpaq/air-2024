@@ -30,11 +30,11 @@ const ResultsStep = ({pref}: ResultsStep) => {
 
       try {
         const response = await getMovieRecommendation({
-          genres: pref.genres,
-          mood: pref.mood,
-          language: pref.language,
-          additionalNotes: pref.additionalNotes,
-          era: pref.era
+          genres: pref.genres.map(genre => genre.toLowerCase()),
+          mood: pref.mood.toLowerCase(),
+          language: pref.language.toLowerCase(),
+          additionalNotes: pref.additionalNotes.toLowerCase(),
+          era: pref.era.toLowerCase()
         });
 
         if (response == null) {
