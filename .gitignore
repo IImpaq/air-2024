@@ -4,4 +4,10 @@
 # LaTeX related folders
 design-document/out/
 
+# Ignore macOS related files/folders
 .DS_STORE
+
+# Ignore backend related irrelevant files/folders
+backend/__pycache__/
+backend/cache/
+data/
