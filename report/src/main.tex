@@ -36,6 +36,7 @@
   \tableofcontents
   \newpage
 
+
   \section{Introduction}
 
   TODO Add an introduction here.
@@ -71,17 +72,46 @@
   adaptability through user feedback. It directly addresses creating a more efficient and user-centric content discovery
   platform while acknowledging technical complexity in processing user preferences and ensuring system responsiveness.
 
+
   \section{Related Work}
 
   TODO Add related work here.
 
-  \section{Literature}
+  \subsection{Literature}
 
   TODO Add literature here.
 
-  \section{Project Discussion}
+  \subsection{Project Discussion}
 
-  TODO OR add project discussion here.
+  This sophisticated movie recommendation system uses multiple advanced methods and domain-specific knowledge
+  to deliver personalized movie recommendations. It strikes a balance between computational efficiency, accuracy, and
+  user experience.
+  The system employs a weighted ensemble of four key parts:
+  \begin{itemize}
+    \item Semantic Analysis (40\%): Uses the MPNet-based SentenceTransformer model to capture deep contextual understanding of movie descriptions and user preferences.
+    \item TF-IDF Similarity (25\%): Captures specific terminology and phrases.
+    \item Sentiment Analysis (25\%): Provides emotional resonance matching between user mood preferences and movie content.
+    \item Popularity Metrics (10\%): Ensures recommendations remain somewhat connected to mainstream appeal.
+  \end{itemize}
+
+  \noindent The system’s robustness is enhanced through efficient text preprocessing, caching, batch processing and
+  GPU (CUDA, MPS) acceleration.
+
+  \noindent Recommendation Generation Process:
+  \begin{itemize}
+    \item Filtering dataset based on trivial criteria (e.g.,\ language, genres).
+    \item Initial query processing combines user mood preferences with notes.
+    \item Multi-stage similarity computation generates semantic embeddings for the query and movie corpus, then calculates TF-IDF similarity, sentiment alignment, and popularity normalization.
+    \item Weighted score combination determines relevance using predefined factors.
+    \item Final ranking selects top recommendations based on weighted scores.
+  \end{itemize}
+
+  \noindent This system is well-suited for streaming platform recommendation engines, personalized content curation, movie discovery
+  and educational purposes.
+  Due to it's modular design (frontend / backend strictly separated) it can be easily integrated into existing systems.
+  The frontend is optionally deployable as the backend can be integrated into any existing system due to interfacing
+  using a easy-to-understand REST API.
+
 
   \section{Experiments and Results}
 
@@ -103,6 +133,7 @@
   \end{itemize}
 
   \noindent This evaluation process was repeated over five days to identify a movie for each evening’s viewing.
+
 
   \section{Conclusion}
 
