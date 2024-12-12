@@ -4,6 +4,7 @@ import torch
 from opensubtitlescom import OpenSubtitles
 from transformers import pipeline
 from dotenv import load_dotenv
+from keybert import KeyBERT
 
 load_dotenv(dotenv_path='../KEYS.env')
 
@@ -94,6 +95,7 @@ def preprocessSubtitles(file_path):
     cleaned_text = re.sub(r"^www\..*", "", cleaned_text, flags=re.MULTILINE)                        # remove lines starting with 'www.'
     cleaned_text = re.sub(r"^Subtitles by.*", "", cleaned_text, flags=re.MULTILINE)                 # remove lines starting with 'Subtitles by'
     cleaned_text = re.sub(r"^[A-Z][A-Z\s]*: ", "", cleaned_text, flags=re.MULTILINE)                # remove names followed by a colon
+    cleaned_text = re.sub(r"^[A-Za-z\s]*:$", "", cleaned_text, flags=re.MULTILINE)                  # remove lines that are only names followed by a colon
     cleaned_text = re.sub(r"^\s*$", "", cleaned_text, flags=re.MULTILINE)                           # remove empty lines
     cleaned_text = re.sub(r"\n{2,}", "\n", cleaned_text)                                            # remove spaces
     cleaned_text = cleaned_text.strip()
@@ -114,3 +116,12 @@ def summarizeSubtitles(text):
     result = summarizer(first_chunk, max_length=MAX_SUM_LENGTH, min_length=MIN_SUM_LENGTH, do_sample=SAMPLE_SUM)
 
     return result[0]['summary_text']
+
+def extractKeyThemes(cleaned_text, num_topics=3):
+    """
+    Extract key themes from cleaned text using KeyBERT.
+    """
+    kw_model = KeyBERT()
+    keywords = kw_model.extract_keywords(cleaned_text, stop_words='english')
+    themes = [kw for kw, _ in keywords][:num_topics]
+    return themes
