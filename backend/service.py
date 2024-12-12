@@ -1,6 +1,7 @@
 from recommender import MovieRecommender
 from mockData import moviesMock, descriptionMock
 from inputTypes import GetMovieRecommendationsInput, GetMovieDescriptionInput
+from subtitles import initializeOpensubtitles, downloadAndSaveSubtitle, checkSubtitleFile, summarizeSubtitles
 import time
 
 recommender = MovieRecommender("../data/movies_dataset_preprocessed.csv")
@@ -25,10 +26,23 @@ def proceedMovieRecommendation(input: GetMovieRecommendationsInput):
 
 def proceedMovieDescription(input: GetMovieDescriptionInput):
     print(input)
-    print("start")
-    # TODO Implement description here
-    time.sleep(3)
-    print("end")
 
-    description = descriptionMock
+    movie_name = f"{input.year} - {input.title}"
+    language = "en"                                             # TODO: Summarys in different languages?
+
+    # Due to the API limit subtitles will be downloaded
+    cleaned_subtitles = checkSubtitleFile(movie_name)
+    
+    if cleaned_subtitles == None:
+        ost = initializeOpensubtitles()                         # TODO: Exception handling when API limit is reached
+        cleaned_subtitles = downloadAndSaveSubtitle(ost, movie_name, language)
+
+    summarized_description = summarizeSubtitles(cleaned_subtitles)
+
+    print("Summary: " + summarized_description)
+    description = {
+        "genre": ["TODO:", "ADD", "THEMES"],                    # TODO: Add genre information
+        "summary": summarized_description
+        }
+
     return description

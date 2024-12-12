@@ -1,6 +1,9 @@
 # IDE related folders
 .idea/
 
+# Ignore environment files
+KEYS.env
+
 # LaTeX related folders
 design-document/out/
 report/out/

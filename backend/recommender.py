@@ -128,7 +128,7 @@ class MovieRecommender:
                 "Rich features missing in dataset. Maybe call fetch.py/preprocess.py before starting the backend...")
 
         # Find potentially cached embeddings
-        cache_key = f"movies_{preferences.mood}_{preferences.era}_{preferences.language}_{"-".join(preferences.genres)}_{len(movies_df)}"
+        cache_key = f'movies_{preferences.mood}_{preferences.era}_{preferences.language}_{"-".join(preferences.genres)}_{len(movies_df)}'
         semantic_embeddings = self._get_cached_embeddings(cache_key)
 
         # If no cached embeddings, encode text features and cache them
