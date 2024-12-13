@@ -16,10 +16,11 @@ export interface PreferenceStep {
 export interface Movie {
   id: string;
   title: string;
+  genre: string;
+  rating: number;
   year: number;
   poster: string;
-  rating: number;
-  genre?: string;
+  confidence: number;
   duration?: string;
   summary?: string;
 }
