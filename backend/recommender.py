@@ -11,8 +11,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
 from transformers import pipeline
-from typing import List, Dict, Tuple
-
 
 class MovieRecommender:
     def __init__(self, dataset_path: str):
@@ -28,11 +26,27 @@ class MovieRecommender:
             "streaming": (2010, 2024)
         }
 
+        self._mood_to_emotion = {
+            "dark": ["fear", "sadness"],
+            "emotional": ["sadness", "joy"],
+            "humorous": ["joy"],
+            "inspiring": ["joy"],
+            "intense": ["anger", "fear"],
+            "melancholic": ["sadness"],
+            "mysterious": ["fear", "surprise"],
+            "relaxing": ["neutral"],
+            "romantic": ["joy"],
+            "suspenseful": ["fear", "surprise"],
+            "thought-provoking": ["neutral"],
+            "uplifting": ["joy"]
+        }
+
         self._similarity_weights = {
             "semantic": 0.4,
-            "tfidf": 0.25,
-            "sentiment": 0.25,
-            "popularity": 0.1
+            "tfidf": 0.4,
+            "emotion": 0.1,
+            "popularity": 0.05,
+            "vote_average": 0.05
         }
 
         print("Loading dataset...")
@@ -43,8 +57,9 @@ class MovieRecommender:
 
         print("Initializing models...")
         self.semantic_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
-        self.sentiment_analyzer = pipeline("sentiment-analysis",
-                                           model="distilbert-base-uncased-finetuned-sst-2-english", device=self.device)
+        self.emotion_analyzer = pipeline("text-classification",
+                                      model="j-hartmann/emotion-english-distilroberta-base",
+                                      device=self.device)
         self.tfidf = TfidfVectorizer(max_features=5000, min_df=2, max_df=0.95, stop_words="english", ngram_range=(1, 2))
         self.semantic_model.to(self.device)
 
@@ -86,7 +101,7 @@ class MovieRecommender:
 
         return "NEUTRAL"
 
-    def _get_cached_embeddings(self, cache_key: str) -> np.ndarray or None:
+    def _get_cached_embeddings(self, cache_key: str) -> np.ndarray | None:
         cache_file = self.cache_dir / f"{cache_key}.pkl"
 
         if cache_file.exists():
@@ -94,32 +109,51 @@ class MovieRecommender:
 
         return None
 
-    def _set_cached_embeddings(self, embeddings: np.ndarray, cache_key: str) -> None:
+    def _set_cached_embeddings(self, embeddings: list, cache_key: str) -> None:
         cache_file = self.cache_dir / f"{cache_key}.pkl"
         with cache_file.open("wb") as f:
             pickle.dump(embeddings, f)
 
-    def _get_sentiment_score(self, text: str) -> float:
-        result = self.sentiment_analyzer(text[:512])
-        return result[0]["score"] if result[0]["label"] == "POSITIVE" else 1 - result[0]["score"]
+    def _get_emotion_score(self, text: str, desired_emotions: list[str]) -> float:
+        raw_results = self.emotion_analyzer(text[:512])
+        results = list(raw_results) if raw_results is not None else []
+
+        if not results:
+            return 0.5
+
+        result = results[0]
+        if not isinstance(result, dict):
+            return 0.5
+
+        emotion = result.get("label")
+        confidence = result.get("score")
+
+        if emotion is None or confidence is None:
+            return 0.5
+
+        if isinstance(confidence, torch.Tensor):
+            confidence = float(confidence)
+
+        return confidence if emotion in desired_emotions else 0.25
 
     def _compute_similarity_score(self,
-                                  semantic_sim: np.ndarray,
-                                  tfidf_sim: np.ndarray,
-                                  sentiment_scores: np.ndarray,
-                                  popularity: np.ndarray) -> np.ndarray:#
-        # TODO: Check if normilization has a bug (? why should it) or dataset is skewed
+                                semantic_sim: np.ndarray,
+                                tfidf_sim: np.ndarray,
+                                emotion_scores: np.ndarray,
+                                popularity: np.ndarray,
+                                vote_average: np.ndarray) -> np.ndarray:
         normalized_popularity = (popularity - popularity.min()) / (popularity.max() - popularity.min())
 
         return (
-                self._similarity_weights["semantic"] * semantic_sim +
-                self._similarity_weights["tfidf"] * tfidf_sim +
-                self._similarity_weights["sentiment"] * sentiment_scores +
-                self._similarity_weights["popularity"] * normalized_popularity
+            self._similarity_weights["semantic"] * semantic_sim +
+            self._similarity_weights["tfidf"] * tfidf_sim +
+            self._similarity_weights["emotion"] * emotion_scores +
+            self._similarity_weights["popularity"] * normalized_popularity +
+            self._similarity_weights["vote_average"] * vote_average
         )
 
     def _generate_recommendations(self, movies_df: pd.DataFrame,
-                                  preferences: GetMovieRecommendationsInput) -> pd.DataFrame:
+                                preferences: GetMovieRecommendationsInput) -> pd.DataFrame:
         if movies_df.empty:
             raise ValueError("No movies matching with trivial criteria. Maybe loosen the criteria...")
 
@@ -128,13 +162,13 @@ class MovieRecommender:
                 "Rich features missing in dataset. Maybe call fetch.py/preprocess.py before starting the backend...")
 
         # Find potentially cached embeddings
-        cache_key = f'movies_{preferences.mood}_{preferences.era}_{preferences.language}_{"-".join(preferences.genres)}_{len(movies_df)}'
+        cache_key = f"movies_{preferences.mood}_{preferences.era}_{preferences.language}_{'-'.join(preferences.genres)}_{len(movies_df)}"
         semantic_embeddings = self._get_cached_embeddings(cache_key)
 
         # If no cached embeddings, encode text features and cache them
         if semantic_embeddings is None:
             semantic_embeddings = self.semantic_model.encode(
-                movies_df["rich_features"].values,
+                movies_df["rich_features"].to_numpy(),
                 batch_size=32,
                 show_progress_bar=True
             )
@@ -158,15 +192,22 @@ class MovieRecommender:
         semantic_similarities = cosine_similarity(query_embedding, semantic_embeddings)[0]
         tfidf_similarities = cosine_similarity(self.tfidf.transform([self._clean_text(query_text)]), tfidf_matrix)[0]
 
-        # Calculate sentiment alignment
-        sentiment_scores = np.array([self._get_sentiment_score(text) for text in movies_df["overview"]])
+        # Extract desired emotion based on the user input mood
+        desired_emotions = self._mood_to_emotion.get(preferences.mood.lower(), ["neutral"])
+
+        # Calculate emotion alignment
+        emotion_scores = np.array([
+            self._get_emotion_score(f"{text} {preferences.additionalNotes}", desired_emotions)
+            for text in movies_df["overview"]
+        ])
 
         # Get final similarity scores
         final_scores = self._compute_similarity_score(
             semantic_similarities,
             tfidf_similarities,
-            sentiment_scores,
-            movies_df["popularity"].values
+            emotion_scores,
+            movies_df["popularity"].to_numpy(),
+            movies_df["vote_average"].to_numpy()
         )
 
         # Getting the top 4 recommendations
@@ -179,7 +220,7 @@ class MovieRecommender:
 
         return recommendations
 
-    def _compare_genres(self, movie_genres: str, preferred_genres: List[str]) -> bool:
+    def _compare_genres(self, movie_genres: str, preferred_genres: list[str]) -> bool:
         # Check if either of the lists is empty
         if not movie_genres or not preferred_genres:
             return False
@@ -191,20 +232,24 @@ class MovieRecommender:
         # Check if any of the preferred genres is in movie genres with nice inline syntax
         return any(genre in movie_genres_lower for genre in preferred_genres_lower)
 
-    def get_movies(self, preferences: GetMovieRecommendationsInput) -> List[Dict]:
+    def get_movies(self, preferences: GetMovieRecommendationsInput) -> list[dict]:
         # Convert era name to range
         era_range = self._era_ranges.get(preferences.era)
+
+        if era_range is None:
+            raise ValueError(f"Invalid era: {preferences.era}")
 
         # Pre-Filter based on trivial criteria to reduce the dataset size
         # TODO: Might improve language selection in frontend later
         # TODO: Add support for selection of multiple languages
         # TODO: Add support for selecting any language
-        filtered_df = self.dataset[
+        filtered_df = pd.DataFrame(self.dataset[
             (self.dataset["original_language"] == preferences.language) &
             (self.dataset["release_year"].between(era_range[0], era_range[1])) &
             (self.dataset["genres"].apply(lambda x: self._compare_genres(x, preferences.genres))) &
-            (self.dataset["popularity"] >= 10.0) # TODO: Maybe leave popularity out later. Currently at least 10
-            ]
+            (self.dataset["popularity"] > 10.0) &
+            (self.dataset["vote_average"] > 0.5)
+        ])
 
         print(f"Movies left after filtering: {len(filtered_df)}")
 
@@ -222,10 +267,10 @@ class MovieRecommender:
             recommendations_post.append({
                 "title": str(row["title"]),
                 "genre": row["genres"],
-                "rating": float(row["popularity"]),
+                "rating": float(row["vote_average"]),
                 "year": str(row["release_year"]),
                 "poster": str(row["poster_path"]),
-                "confidence_score": row["confidence_score"],
+                "confidence": row["confidence_score"],
             })
 
         return recommendations_post
