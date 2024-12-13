@@ -106,7 +106,15 @@ def summarizeSubtitles(text):
     """
     Currently only summarizes first chunk of subtitle text (got best results with only first chunk)
     """
-    device = 0 if torch.cuda.is_available() else -1 # use gpu if possible
+    if torch.cuda.is_available():
+        print("CUDA available")
+        device = torch.device("cuda")
+    elif torch.backends.mps.is_available():
+        print("MPS available")
+        device = torch.device("mps")
+    else:
+        print("Fallback to CPU")
+        device = torch.device("cpu")
 
     summarizer = pipeline("summarization", model="google/long-t5-tglobal-base", device=device)
 
