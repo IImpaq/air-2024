@@ -1,5 +1,3 @@
-from typing import Union
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from service import proceedMovieRecommendation, proceedMovieDescription, proceedAvailableLanguages
@@ -38,3 +36,4 @@ def movie_description(input: GetMovieDescriptionInput):
     movie_description = proceedMovieDescription(input)
     print(movie_description)
     return {"genre": movie_description["genre"], "summary": movie_description["summary"]}
+

@@ -1,4 +1,3 @@
-from pathlib import Path
 import re
 import time
 import pandas as pd
@@ -6,7 +5,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-COLUMNS = ["id", "title", "genres", "original_language", "overview", "popularity", "release_date", "status", "keywords",
+COLUMNS = ["id", "title", "genres", "original_language", "overview", "popularity", "vote_average", "release_date", "status", "keywords",
            "credits", "poster_path"]
 
 
