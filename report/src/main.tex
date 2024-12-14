@@ -86,12 +86,13 @@
   This sophisticated movie recommendation system uses multiple advanced methods and domain-specific knowledge
   to deliver personalized movie recommendations. It strikes a balance between computational efficiency, accuracy, and
   user experience.
-  The system employs a weighted ensemble of four key parts:
+  The system employs a weighted ensemble of five key parts:
   \begin{itemize}
     \item Semantic Analysis (40\%): Uses the MPNet-based SentenceTransformer model to capture deep contextual understanding of movie descriptions and user preferences.
-    \item TF-IDF Similarity (25\%): Captures specific terminology and phrases.
-    \item Sentiment Analysis (25\%): Provides emotional resonance matching between user mood preferences and movie content.
-    \item Popularity Metrics (10\%): Ensures recommendations remain somewhat connected to mainstream appeal.
+    \item TF-IDF Similarity (40\%): Captures specific terminology and phrases.
+    \item Emotion Analysis (15\%): Using text-classification as a foundation the emotional accordance with the movie content and the mood choice by the user is evaluated.
+    \item Vote Average Metrics (2,5\%): One out of two factors to ensure recommendations remain somewhat connected to mainstream appeal.
+    \item Popularity Metrics (2,5\%): One out of two factors to ensure recommendations remain somewhat connected to mainstream appeal.
   \end{itemize}
 
   \noindent The system’s robustness is enhanced through efficient text preprocessing, caching, batch processing and
@@ -115,24 +116,15 @@
   \section{Experiments and Results}
 
   To evaluate the performance, feasibility, and efficiency of our system, a series of experiments were conducted.
-  A standardized questionnaire was employed to assess the system’s performance. Each group member independently evaluated
-  the system.
-  The evaluator initially considered the movies (genres, actors, mood) they would like to watch. They then completed the
-  questionnaire to document their expectations for recommendations.
-  Next, the evaluator navigated through the application to locate the recommended movies. Finally, they completed the
-  questionnaire once more to document the actual recommendations received.
-  A subjective comparison of the anticipated and actual recommendations was conducted. This comparison encompassed the
-  following aspects:
-  \begin{itemize}
-    \item To what extent did the system comprehend the user’s query?
-    \item Were there any unfamiliar movies recommended by the system?
-    \item How accurately did the system recommend movies that aligned with the user’s query?
-    \item To what extent did the system recommend movies that the user would find enjoyable?
-    \item To what extent did the system recommend movies that the user was already familiar with?
-  \end{itemize}
+  A standardized questionnaire was employed to assess the system’s performance.
+  Each group member independently evaluated the system.
+  This evaluation process was iterated over three days to identify a movie for each evening’s viewing.
+  The individual evaluation reports can be found in the appendix folder within the
+  \href{https://github.com/IImpaq/air-2024/appendix}{project repository}.
+  The evaluation results of each group member were averaged to provide a comprehensive overview of the system’s performance.
+  Our finalized results and evaluation is presented in the following paragraph.
 
-  \noindent This evaluation process was repeated over five days to identify a movie for each evening’s viewing.
-
+  \noindent TODO Add evaluation results and appendix folder later
 
   \section{Conclusion}
 
