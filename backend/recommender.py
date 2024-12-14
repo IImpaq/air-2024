@@ -44,9 +44,9 @@ class MovieRecommender:
         self._similarity_weights = {
             "semantic": 0.4,
             "tfidf": 0.4,
-            "emotion": 0.1,
-            "popularity": 0.05,
-            "vote_average": 0.05
+            "emotion": 0.15,
+            "popularity": 0.025,
+            "vote_average": 0.025
         }
 
         print("Loading dataset...")
