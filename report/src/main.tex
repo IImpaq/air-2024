@@ -3,11 +3,14 @@
 
 \documentclass[12pt,a4paper]{article}
 
+\usepackage[backend=biber,style=numeric]{biblatex}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{graphicx}
 \usepackage{geometry}
 \usepackage{hyperref}
+
+\addbibresource{./references.bib}
 
 \geometry{margin=2.5cm}
 
@@ -44,23 +47,12 @@
   \subsection{Motivation}
 
   The digital entertainment landscape has transformed, with unprecedented content production and availability.
-  However, this abundance of choice has become a burden for consumers. Streaming platforms prioritize user retention
+  However, this abundance of choice has become a burden for consumers.
+  Streaming platforms prioritize user retention
   over satisfaction, resulting in suboptimal viewing experiences.
-
-  \noindent Content discovery is challenging due to cognitive load from navigating extensive catalogs across multiple services.
+  Content discovery is challenging due to cognitive load from navigating extensive catalogs across multiple services.
   Existing recommendation systems exhibit biases towards platform-specific content and popular titles, wasting user time.
-  Industry data shows the average user spends 20 minutes per session browsing for content, accumulating lost time.
-
-  \noindent Factors exacerbate the problem:
-  \begin{itemize}
-    \item Accelerating content production with billions invested in new content.
-    \item Algorithmic recommendations prioritizing platform engagement over user satisfaction.
-    \item Limited cross-platform content discovery solutions.
-    \item Inadequate consideration of contextual viewing preferences.
-    \item Lack of efficient recommendation systems.
-  \end{itemize}
-
-  \noindent A user-centric approach is needed, prioritizing user time and preferences over platform metrics.
+  A user-centric approach is needed, prioritizing user time and preferences over platform metrics.
 
   \subsection{Research Question}
 
@@ -76,13 +68,37 @@
   \section{Related Work}
 
   This section provides an overview of the literature and a brief discussion regarding our project.
+  This section starts with a brief overview of the literature, followed by a discussion of our actual project implementation.
 
   \subsection{Literature}
 
-  TODO Add literature here.
+  There are several approaches to movie recommendation systems.
+  For the literature overview we focus on literature matching the context of the ``Advanced Information Retrieval'' course.
+  One paper espcially caught our attention, as it uses a transformer-based architecture to generate movie recommendations,
+  but also discusses foundtaional steps like data preprocessing and dimensionality reduction.
+  This is especially of interest to us, as the whole topic is novel to us and we are looking for a good starting point.
+
+  \noindent One team of researchers \cite{Iglesias-pardo-lopez-quintero-2024} proposes a movie recommendation system that uses a
+  transformer-based embeddings space. To achieve this it was necessary to perform dimensionality reduction.
+  The first thing, as in many data science projects, is to preprocess the data.
+  In the case of the discussed project the dataset of 45.466 movies was reduced to just 11.236 \cite{Iglesias-pardo-lopez-quintero-2024}.
+  The features of the movies where transformed to a matrix consisting of id, original title, release date,
+  original language, runtime, vote average, vote count, popularity, poster path, production companies, genres, overview,
+  keywords, cast, director and release year \cite{Iglesias-pardo-lopez-quintero-2024}.
+  To generate meaningful embeddings of sentences the a variation of the BERT-family of models was used \cite{Iglesias-pardo-lopez-quintero-2024}.
+  Through the usage of dimensionality reduction they were able to visualize the movies on a 2D-plane \cite{Iglesias-pardo-lopez-quintero-2024}.
+
+  \noindent The mentioned steps already provide good insight into a starting point for such a system.
+  This was a good orientation for our project, but the actual user-interaction is highly different than our approach.
+  In the case of the mentioned project the user is able to select 10 movies and the system will then generate a recommendation \cite{Iglesias-pardo-lopez-quintero-2024}.
+  Afterwards the user is asked to rate the recommendation and the system will generate a new recommendation based on the feedback \cite{Iglesias-pardo-lopez-quintero-2024}.
 
   \subsection{Project Discussion}
 
+  After reviewing the literature, we browsed through \href{https://www.huggingface.com/}{HuggingFace} to find datasets,
+  models and other resources to build our system.
+  This was also the most informative part of our own research as we gathered lots of ideas and insights from the community
+  and through the extensive collection of readmes and whitepapers on the platform.
   This sophisticated movie recommendation system uses multiple advanced methods and domain-specific knowledge
   to deliver personalized movie recommendations. It strikes a balance between computational efficiency, accuracy, and
   user experience.
@@ -128,6 +144,10 @@
 
   \section{Conclusion}
 
-  TODO Add key takeaways and future work.
+  In the project we managed to produce highly usable and efficient movie recommendations.
+  Nonetheless, there is still a lot of tweaking and fine-tuning to be done.
+  Minor changes can lead to significant improvements in the user experience as we already noticed during development.
+
+  \printbibliography
 
 \end{document}
