@@ -23,6 +23,7 @@ export const getMovieRecommendation = async (body: GetMovieRecommendationsInput)
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(body),
+            keepalive: true
         });
 
         if (!response.ok) {

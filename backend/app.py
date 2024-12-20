@@ -1,8 +1,6 @@
-from typing import Union
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from service import proceedMovieRecommendation, proceedMovieDescription
+from service import proceedMovieRecommendation, proceedMovieDescription, proceedAvailableLanguages
 from inputTypes import GetMovieRecommendationsInput, GetMovieDescriptionInput
 
 app = FastAPI()
@@ -21,6 +19,11 @@ app.add_middleware(
 def read_root():
     return {"Advanced": "Information Retrieval"}
 
+@app.get("/availableLanguages")
+def available_languages():
+    languages = proceedAvailableLanguages()
+    return {"languages": languages}
+
 @app.post("/movieRecommendation")
 def movie_recommendation(input: GetMovieRecommendationsInput):
     print("movieRecommendation with body:", input.dict())
@@ -33,3 +36,4 @@ def movie_description(input: GetMovieDescriptionInput):
     movie_description = proceedMovieDescription(input)
     print(movie_description)
     return {"genre": movie_description["genre"], "summary": movie_description["summary"]}
+
