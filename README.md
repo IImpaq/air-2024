@@ -36,7 +36,7 @@ cd frontend && bun run dev
 # Launch backend
 cd backend && uvicorn main:app --reload
 
-### To run the recommender system as a cli, follow the instructions below:
+### To run the recommender system as a cli app, follow the instructions below:
 # Launch the recommender system
 cd backend && python cli.py
 ```
@@ -51,8 +51,9 @@ TODO Add license
 
 ## 🔗 Links
 
-- [Design Document](design-document)
-- TODO
+- [Design Document](design-document/design-document.pdf)
+- [Report](report/report.pdf)
+- [Presentation](presentation/presentation.pdf)
 
 ---
 Made with ❤️
