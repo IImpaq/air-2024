@@ -17,11 +17,28 @@ A intelligent movie recommendation system that uses advanced techniques to recom
 # Clone the repository
 git clone git@github.com:IImpaq/air-2024.git
 
+# Change directory
+cd air-2024
+
+# Install backend requirements
+cd backend && pip install -r requirements.txt && cd ..
+
+# Install frontend requirements
+cd frontend && bun install && cd ..
+
+# Fetch & preprocess data
+cd backend && python fetch.py && python preprocess.py && cd ..
+
+### To run the full-stack application locally, follow the instructions below:
 # Launch Frontend
-TOOD
+cd frontend && bun run dev
 
 # Launch backend
-TODO
+cd backend && uvicorn main:app --reload
+
+### To run the recommender system as a cli, follow the instructions below:
+# Launch the recommender system
+cd backend && python cli.py
 ```
 
 ## 🛠️ Tech Stack
