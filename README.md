@@ -26,7 +26,7 @@ cd backend && pip install -r requirements.txt && cd ..
 # Install frontend requirements
 cd frontend && bun install && cd ..
 
-# Fetch & preprocess data
+# Fetch dataset & preprocess data
 cd backend && python fetch.py && python preprocess.py && cd ..
 
 ### To run the full-stack application locally, follow the instructions below:
