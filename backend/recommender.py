@@ -280,6 +280,8 @@ class MovieRecommender:
                 "year": str(row["release_year"]),
                 "poster": str(row["poster_path"]),
                 "confidence": row["confidence_score"],
+                "popularity": float(row["popularity"]),
+                "language": str(row["original_language"])
             })
 
         return recommendations_post
