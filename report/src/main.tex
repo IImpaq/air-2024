@@ -119,13 +119,65 @@ using a easy-to-understand REST API.
 \section{Experiments and Results}
 
 To evaluate the performance, feasibility, and efficiency of our system, a series of experiments were conducted.
-TA standardized questionnaire was employed to assess the system’s performance.
+A standardized questionnaire was employed to assess the system’s performance.
 Each group member independently evaluated the system.
 This evaluation process was iterated over three days to identify a movie for each evening’s viewing.
 The individual evaluation reports can be found in the appendix folder within the
 \href{https://github.com/IImpaq/air-2024/appendix}{project repository}.
 The evaluation results of each group member were averaged to provide a comprehensive overview of the system’s performance.
 Our finalized results and evaluation is presented in the following paragraph.
+
+% TODO Add results of subjective evaluation
+
+\noindent The second part of the evaluation was to objectively and quantifiably evaluate the system through a evaluation script.
+This script measured different metrics like response time, confidence score and genre distribution.
+Aftwards a variety of metrics was calculated to evaluate the system.
+The evaluation script also measured statistical metrics like precision, recall and F1-score.
+We are going to use the rest of this section to discuss the most relevant metrics and results of the evaluation.
+The evaluation script was called with the following parameters:
+\begin{itemize}
+  \item use randomly sampled 20\% of the full dataset for evaluation
+  \item run each test case 2 times and take the average
+  \item sample 1000 testcases from all generated tests to evaluate the system
+\end{itemize}
+
+\noindent The script was executed on a MacBook Pro 14" with a M3 Pro chip and 18GB of RAM in a Python 3.12.6 environment.
+In the following figure we can see the distribution of response times of the recommendation system.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{../assets/response_time_dist.png}
+  \caption{Response time}
+\end{figure}
+
+\noindent This figure shows that sometimes the system is unable to provide results which causes a nearly instant response.
+In a majority of the cases the system is able to provide results within 4 seconds which is reasonable given the complexity of the system and the used hardware.
+There are also some outliers which have taken more than 10 seconds to provide results.
+In the next figure we can see the distribution of confidence scores of the recommendation system.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{../assets/confidence_dist.png}
+  \caption{Confidence score}
+\end{figure}
+
+\noindent The figure shows that the system mostly has a confidence score of 42\% which could be better.
+In the last figure we can see the distribution of genre distribution of the recommendation system visualized in a histogram.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{../assets/top_genres.png}
+  \caption{Genre distribution histogram}
+\end{figure}
+
+\noindent The figure clearly shows that the system is able to recommend movies from a wide variety of genres.
+Some are recommended more often than others, but the system does not show a clear bias towards a specific genre.
+\newline \noindent If we take a look at the statistical metrics we can see that the system performs quite well.
+The precision of the system is 98.78\% which indicates that the system is very good at recommending movies that the user likes.
+The recall of the system is 21.96\% which indicates that the system might be missing out on some movies that the user likes.
+The F1-score of the system is 29.17\% which is relatively low, but was expected due to the low recall.
+
+The mentioned values, complete results as well as other plots can be found in the evaluation folder within the \href{https://github.com/IImpaq/air-2024/evaluation}{project repository}.
 
 \section{Conclusion}
 
