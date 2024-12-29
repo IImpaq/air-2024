@@ -1,0 +1,49 @@
+{
+  "languages": ["en"],
+  "genres": [
+    "action",
+    "adventure",
+    "animation",
+    "anime",
+    "comedy",
+    "crime",
+    "drama",
+    "family",
+    "fantasy",
+    "historical",
+    "horror",
+    "musical",
+    "mystery",
+    "romance",
+    "seasonal",
+    "science Fiction",
+    "sports",
+    "thriller",
+    "war",
+    "western"
+  ],
+  "eras": [
+    "silent",
+    "golden",
+    "postwar",
+    "new",
+    "blockbuster",
+    "digital",
+    "streaming",
+    "any"
+  ],
+  "moods": [
+    "dark",
+    "emotional",
+    "humorous",
+    "inspiring",
+    "intense",
+    "melancholic",
+    "mysterious",
+    "relaxing",
+    "romantic",
+    "suspenseful",
+    "thought-provoking",
+    "uplifting"
+  ]
+}
