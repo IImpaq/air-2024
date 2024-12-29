@@ -16,7 +16,7 @@ def get_valid_input(prompt, valid_options, allow_multiple=True):
                 return selections
         else:
             if user_input not in valid_options:
-                print(f"Invalid inout: {user_input}. Please try again.")
+                print(f"Invalid input: {user_input}. Please try again.")
             else:
                 return [user_input]
 
