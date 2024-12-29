@@ -6,6 +6,7 @@ KEYS.env
 
 # LaTeX related folders
 design-document/out/
+questionnaire/out/
 report/out/
 
 # Ignore macOS related files/folders
