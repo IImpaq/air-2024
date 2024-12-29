@@ -35,7 +35,7 @@ class MovieRecommenderEvaluation:
         for case_id in range(len(test_cases)):
             for i in range(num_iterations):
                 print("\033[H\033[J") # https://stackoverflow.com/a/50560686
-                print("-"*50 + f" Iteration {i}/{num_iterations} for test case: {case_id}/{len(test_cases)} " + "-"*50)
+                print("-"*50 + f" Iteration {i + 1}/{num_iterations} for test case: {case_id + 1}/{len(test_cases)} " + "-"*50)
                 print(f"User Preferences -> Language: {test_cases[case_id].language}, Era: {test_cases[case_id].era}, Genres: {test_cases[case_id].genres}")
                 self._test(test_cases[case_id])
 
