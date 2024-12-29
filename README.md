@@ -2,7 +2,7 @@
 
 A intelligent movie recommendation system that uses advanced techniques to recommend movies based on your preferences.
 
-# ✨ Key Features
+## ✨ Key Features
 
 - Platform-independent movie recommendations
 - Genre Selection
@@ -11,15 +11,15 @@ A intelligent movie recommendation system that uses advanced techniques to recom
 - Language Decision
 - Notes for in-depth personalization
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
-## Prerequisites
+### Prerequisites
 
 - Git
 - Bun.js
 - Python 3.12
 
-## Installation
+### Installation
 
 ```bash
 # Clone the repository
@@ -39,9 +39,9 @@ bun install
 cd ..
 ```
 
-## Running
+### Running
 
-### Full-Stack Application
+**Full-Stack Application**
 
 ```bash
 # Terminal 1: Start Frontend
@@ -53,7 +53,7 @@ cd backend
 uvicorn main:app --reload  # API available at http://localhost:8000
 ```
 
-### CLI Mode
+**CLI Mode**
 
 ```bash
 # Run backend/movie recommender in interactive cli mode
@@ -61,7 +61,7 @@ cd backend
 python cli.py
 ```
 
-### Evaluate the recommender system
+**Evaluate the recommender system**
 
 ```bash
 # Run the automated evaluation script
@@ -69,15 +69,15 @@ cd backend
 python evaluation.py
 ```
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 - Frontend: NextJS & TypeScript
 - Backend: Python, FastAPI & PyTorch
 
-# 📝 License
+## 📝 License
 TODO Add license
 
-# 🔗 Links
+## 🔗 Links
 
 - [Design Document](design-document/design-document.pdf)
 - [Report](report/report.pdf)
