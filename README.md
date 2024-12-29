@@ -54,6 +54,9 @@ TODO Add license
 - [Design Document](design-document/design-document.pdf)
 - [Report](report/report.pdf)
 - [Presentation](presentation/presentation.pdf)
+- [Questionnaire](questionnaire/questionnaire.pdf)
+- [Evaluation](evaluation/)
+- [Movie Dataset](https://huggingface.co/datasets/wykonos/movies)
 
 ---
 Made with ❤️
