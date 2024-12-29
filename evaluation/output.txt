@@ -1,0 +1,36 @@
+Response Time Statistics:
+	- Average: 2.87 seconds
+	- Standard Deviation: 4.09 seconds
+	- Min: 0.04 seconds
+	- Median: 1.31 seconds
+	- Max: 28.66 seconds
+
+Genre Diversity Statistics:
+	- Average genres per recommendation: 3.81
+	- Standard Deviation: 0.47
+	- Min genres: 1
+	- Max genres: 4
+
+Confidence Score Statistics:
+	- Average confidence: 42.22%
+	- Standard Deviation: 12.52%
+	- Min confidence: 0.00%
+	- Max confidence: 93.83%
+
+Rating Statistics:
+	- Average rating: 6.81
+	- Standard Deviation: 0.80
+	- Min rating: 3.10
+	- Max rating: 8.60
+
+Top 5 Most Recommended Genres:
+	- Drama: 2698 recommendations
+	- Thriller: 1956 recommendations
+	- Comedy: 1788 recommendations
+	- Romance: 1410 recommendations
+	- Adventure: 1396 recommendations
+
+Quality Metrics:
+	- Average Precision: 98.78%
+	- Average Recall: 21.96%
+	- Average F1 Score: 29.17%
