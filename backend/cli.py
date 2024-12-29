@@ -3,6 +3,7 @@ from recommender import MovieRecommender
 
 def get_valid_input(prompt, valid_options, allow_multiple=True):
     while True:
+        print("\033[H\033[J") # https://stackoverflow.com/a/50560686
         print(f"\nPossible inputs: {", ".join(valid_options)}")
         user_input = input(prompt).strip()
 
@@ -66,6 +67,8 @@ def main():
 
         notes = input("\nEnter any additional notes (or press Enter to skip): ")
 
+        print("\033[H\033[J") # https://stackoverflow.com/a/50560686
+
         recommendations = recommender.get_movies(
             GetMovieRecommendationsInput(
                 mood=mood,
@@ -75,6 +78,8 @@ def main():
                 genres=genres,
             )
         )
+
+        print("\033[H\033[J") # https://stackoverflow.com/a/50560686
 
         print("\nTop 4 Recommended Movies:")
         for i, movie in enumerate(recommendations[:4], 1):
