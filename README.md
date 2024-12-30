@@ -79,7 +79,8 @@ python evaluation.py
 - Backend: Python, FastAPI & PyTorch
 
 ## 📝 License
-TODO Add license
+
+MIT License (see [LICENSE.MD](LICENSE.md)).
 
 ## 🔗 Links
 
