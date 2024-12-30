@@ -7,12 +7,14 @@ import {
   HiOutlineClipboardDocumentList,
   HiXMark,
   HiSignal,
+  HiBookOpen,
 } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
 import { Movie, PreferenceStep } from "@/lib/types";
 import AILoadingAnimation from "@/components/LoadingAnimation";
 import { getMovieDescription } from "@/api/getMovieDescription";
 import { getMovieRecommendation } from "@/api/getMovieRecommendations";
+import { HiX } from "react-icons/hi";
 
 interface ResultsStep {
   pref: PreferenceStep;
@@ -139,39 +141,12 @@ const ResultsStep = ({ pref }: ResultsStep) => {
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
-                            className="p-3 rounded-full bg-white text-slate-900 shadow-lg"
-                          >
-                            <HiPlay className="w-6 h-6" />
-                          </motion.button>
-                          <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
                             onClick={() => handleShowSummary(movie)}
                             className="p-3 rounded-full bg-white/20 text-white backdrop-blur-sm"
                           >
-                            <HiOutlineClipboardDocumentList className="w-6 h-6" />
+                            <HiBookOpen className="w-6 h-6" />
                           </motion.button>
                         </div>
-                        {showError && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.3 }}
-                            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
-                          >
-                            <span>
-                              Fehler beim Abrufen der Detail Ansicht. Bitte
-                              versuchen Sie es erneut.
-                            </span>
-                            <button
-                              onClick={() => setShowError(false)}
-                              className="ml-4 underline"
-                            >
-                              Schließen
-                            </button>
-                          </motion.div>
-                        )}
                       </motion.div>
                     )}
 
@@ -223,7 +198,7 @@ const ResultsStep = ({ pref }: ResultsStep) => {
                       >
                         <div className="flex justify-between items-start mb-4">
                           <h3 className="text-lg font-semibold text-slate-700">
-                            AI Analysis
+                            AI Introduction
                           </h3>
                           <button
                             onClick={() => setShowSummary(null)}
@@ -273,6 +248,26 @@ const ResultsStep = ({ pref }: ResultsStep) => {
           )}
         </AnimatePresence>
       </motion.div>
+
+      {showError && (
+        <div className="absolute inset-x-0 -bottom-2 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
+          >
+            <span>
+              Error while trying to generate movie recommendation. Please try
+              again later.
+            </span>
+            <button onClick={() => setShowError(false)} className="ml-4">
+              <HiX />
+            </button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };
