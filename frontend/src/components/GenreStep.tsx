@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   HiBolt,
   HiClock,
@@ -28,18 +29,20 @@ import {
 } from "react-icons/hi2";
 
 interface GenreStepProps {
+  genres: string[];
   selectedGenres: string[];
   onGenreToggle: (genre: string) => void;
 }
 
 export const GenreStep = ({
+  genres,
   selectedGenres,
   onGenreToggle,
 }: GenreStepProps) => {
   // Some ideas for genres which could be used is from:
   // - Wikipedia: https://en.wikipedia.org/wiki/History_of_film
   // - IMDB: https://www.imdb.com/feature/genre/
-  const genres = [
+  const [genreMapping, setGenreMapping] = useState([
     {
       name: "Action",
       icon: <HiBolt className="w-5 h-5" />,
@@ -51,10 +54,6 @@ export const GenreStep = ({
     {
       name: "Animation",
       icon: <HiPaintBrush className="w-5 h-5" />,
-    },
-    {
-      name: "Anime",
-      icon: <HiPencil className="w-5 h-5" />,
     },
     {
       name: "Comedy",
@@ -77,7 +76,7 @@ export const GenreStep = ({
       icon: <HiSparkles className="w-5 h-5" />,
     },
     {
-      name: "Historical",
+      name: "History",
       icon: <HiClock className="w-5 h-5" />,
     },
     {
@@ -85,7 +84,7 @@ export const GenreStep = ({
       icon: <HiPuzzlePiece className="w-5 h-5" />,
     },
     {
-      name: "Musical",
+      name: "Music",
       icon: <HiMusicalNote className="w-5 h-5" />,
     },
     {
@@ -97,7 +96,7 @@ export const GenreStep = ({
       icon: <HiHeart className="w-5 h-5" />,
     },
     {
-      name: "Seasonal",
+      name: "Documentary",
       icon: <HiBell className="w-5 h-5" />,
     },
     {
@@ -105,7 +104,7 @@ export const GenreStep = ({
       icon: <HiRocketLaunch className="w-5 h-5" />,
     },
     {
-      name: "Sports",
+      name: "TV Movie",
       icon: <HiTrophy className="w-5 h-5" />,
     },
     {
@@ -120,11 +119,18 @@ export const GenreStep = ({
       name: "Western",
       icon: <HiSun className="w-5 h-5" />,
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    const filteredMapping = genreMapping.filter((genre) =>
+      genres.includes(genre.name),
+    );
+    setGenreMapping(filteredMapping);
+  }, [genres]);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-      {genres.map((genre) => (
+      {genreMapping.map((genre) => (
         <motion.button
           key={genre.name}
           onClick={() => onGenreToggle(genre.name)}

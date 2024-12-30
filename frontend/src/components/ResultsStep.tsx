@@ -109,7 +109,7 @@ const ResultsStep = ({ pref }: ResultsStep) => {
           {isLoading ? (
             <AILoadingAnimation />
           ) : (
-            movies.map((movie, index) => (
+            movies.map((movie) => (
               <motion.div
                 key={movie.id}
                 variants={item}
