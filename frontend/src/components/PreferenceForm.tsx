@@ -20,9 +20,14 @@ import { getAvailableLanguages } from "@/api/getAvailableLanguages";
 interface PreferenceFormProps {
   genres: string[];
   onSubmit: (preferences: PreferenceStep) => void;
+  onGoHome: () => void;
 }
 
-const PreferenceForm = ({ genres, onSubmit }: PreferenceFormProps) => {
+const PreferenceForm = ({
+  genres,
+  onSubmit,
+  onGoHome,
+}: PreferenceFormProps) => {
   const [step, setStep] = useState(1);
   const [preferences, setPreferences] = useState<PreferenceStep>({
     genres: [],
@@ -205,9 +210,14 @@ const PreferenceForm = ({ genres, onSubmit }: PreferenceFormProps) => {
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          onClick={() => setStep((prev) => Math.max(1, prev - 1))}
-          className={`px-8 py-4 rounded-xl font-medium transition-all ${step === 1 ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
-          disabled={step === 1}
+          onClick={() => {
+            if (step === 1) {
+              onGoHome();
+            } else {
+              setStep((prev) => Math.max(1, prev - 1));
+            }
+          }}
+          className="px-8 py-4 rounded-xl font-medium transition-all bg-slate-100 text-slate-600 hover:bg-slate-200"
         >
           Back
         </motion.button>
@@ -217,14 +227,14 @@ const PreferenceForm = ({ genres, onSubmit }: PreferenceFormProps) => {
           whileTap={{ scale: 0.98 }}
           onClick={handleNext}
           className={`px-8 py-4 rounded-xl font-medium transition-all
-              ${
-                (step === 1 && preferences.genres.length == 0) ||
-                (step === 2 && preferences.mood === "") ||
-                (step === 3 && preferences.era === "") ||
-                (step === 4 && preferences.language === "")
-                  ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                  : "bg-slate-900 text-white shadow-lg hover:bg-slate-800"
-              }`}
+                  ${
+                    (step === 1 && preferences.genres.length == 0) ||
+                    (step === 2 && preferences.mood === "") ||
+                    (step === 3 && preferences.era === "") ||
+                    (step === 4 && preferences.language === "")
+                      ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                      : "bg-slate-900 text-white shadow-lg hover:bg-slate-800"
+                  }`}
           disabled={
             (step === 1 && preferences.genres.length == 0) ||
             (step === 2 && preferences.mood === "") ||

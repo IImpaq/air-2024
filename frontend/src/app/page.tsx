@@ -119,6 +119,7 @@ const Home = () => {
                       setPreferences(pref);
                       setStep("results");
                     }}
+                    onGoHome={() => setStep("landing")}
                   />
                 </div>
               </motion.div>
