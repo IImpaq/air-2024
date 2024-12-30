@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiOutlineFilm } from "react-icons/hi";
+import { HiOutlineFilm, HiX } from "react-icons/hi";
 import PreferenceForm from "@/components/PreferenceForm";
 import ResultsStep from "@/components/ResultsStep";
 import { PreferenceStep } from "@/lib/types";
+import { getAvailableGenres } from "@/api/getAvailableGenres";
 
 const Home = () => {
   const [step, setStep] = useState<"landing" | "preferences" | "results">(
@@ -13,6 +14,15 @@ const Home = () => {
   );
   const [preferences, setPreferences] = useState<PreferenceStep | null>(null);
   const [showError, setShowError] = useState(false);
+  const [genres, setGenres] = useState<string[]>([]);
+
+  useEffect(() => {
+    getAvailableGenres().then((response) => {
+      if (response) {
+        setGenres(response.genres);
+      }
+    });
+  }, []);
 
   return (
     <main className="min-h-screen bg-slate-50 relative overflow-hidden">
@@ -85,51 +95,57 @@ const Home = () => {
           )}
 
           {step === "preferences" && (
-            <motion.div
-              key="preferences"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="max-w-3xl mx-auto"
-            >
-              <div className="bg-white rounded-3xl shadow-xl p-8">
-                <motion.h2
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.1, duration: 0.4 }}
-                  className="text-3xl font-bold text-slate-900 mb-6 text-center"
-                >
-                  Tell us your preferences
-                </motion.h2>
-                <PreferenceForm
-                  onSubmit={(pref) => {
-                    setPreferences(pref);
-                    setStep("results");
-                  }}
-                />
-              </div>
-              {showError && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
-                >
-                  <span>
-                    Error while trying to generate movie recommendation. Please
-                    try again later.
-                  </span>
-                  <button
-                    onClick={() => setShowError(false)}
-                    className="ml-4 underline"
+            <>
+              <motion.div
+                key="preferences"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="max-w-3xl mx-auto"
+              >
+                <div className="bg-white rounded-3xl shadow-xl p-8">
+                  <motion.h2
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.1, duration: 0.4 }}
+                    className="text-3xl font-bold text-slate-900 mb-6 text-center"
                   >
-                    Schließen
-                  </button>
-                </motion.div>
+                    Tell us your preferences
+                  </motion.h2>
+                  <PreferenceForm
+                    genres={genres}
+                    onSubmit={(pref) => {
+                      setPreferences(pref);
+                      setStep("results");
+                    }}
+                    onGoHome={() => setStep("landing")}
+                  />
+                </div>
+              </motion.div>
+              {showError && (
+                <div className="absolute inset-x-0 -bottom-2 flex justify-center">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg"
+                  >
+                    <span>
+                      Error while trying to generate movie recommendation.
+                      Please try again later.
+                    </span>
+                    <button
+                      onClick={() => setShowError(false)}
+                      className="ml-4"
+                    >
+                      <HiX />
+                    </button>
+                  </motion.div>
+                </div>
               )}
-            </motion.div>
+            </>
           )}
 
           {step === "results" && (

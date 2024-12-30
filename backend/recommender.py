@@ -142,14 +142,23 @@ class MovieRecommender:
                                 emotion_scores: np.ndarray,
                                 popularity: np.ndarray,
                                 vote_average: np.ndarray) -> np.ndarray:
-        normalized_popularity = (popularity - popularity.min()) / (popularity.max() - popularity.min())
+        def normalize(x):
+            if x.max() == x.min():
+                return np.zeros_like(x)
+            return (x - x.min()) / (x.max() - x.min())
+
+        normalized_semantic = normalize(semantic_sim)
+        normalized_tfidf = normalize(tfidf_sim)
+        normalized_emotion = normalize(emotion_scores)
+        normalized_popularity = normalize(popularity)
+        normalized_vote = normalize(vote_average)
 
         return (
-            self._similarity_weights["semantic"] * semantic_sim +
-            self._similarity_weights["tfidf"] * tfidf_sim +
-            self._similarity_weights["emotion"] * emotion_scores +
+            self._similarity_weights["semantic"] * normalized_semantic +
+            self._similarity_weights["tfidf"] * normalized_tfidf +
+            self._similarity_weights["emotion"] * normalized_emotion +
             self._similarity_weights["popularity"] * normalized_popularity +
-            self._similarity_weights["vote_average"] * vote_average
+            self._similarity_weights["vote_average"] * normalized_vote
         )
 
     def _generate_recommendations(self, movies_df: pd.DataFrame,
@@ -271,6 +280,8 @@ class MovieRecommender:
                 "year": str(row["release_year"]),
                 "poster": str(row["poster_path"]),
                 "confidence": row["confidence_score"],
+                "popularity": float(row["popularity"]),
+                "language": str(row["original_language"])
             })
 
         return recommendations_post
