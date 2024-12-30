@@ -6,12 +6,27 @@ import time
 
 recommender = MovieRecommender("../data/movies_dataset_preprocessed.csv")
 
-def proceedAvailableLanguages():
-    languages = []
+def proceedAvailableGenres():
+    genres = []
 
     for i in range(len(recommender.dataset)):
-        if recommender.dataset["original_language"][i] not in languages:
-            languages.append(recommender.dataset["original_language"][i])
+        temp = recommender.dataset["genres"][i].split("-")
+        for genre in temp:
+            if genre not in genres:
+                genres.append(genre)
+
+    return genres
+
+
+def proceedAvailableLanguages():
+    language_counts = {}
+
+    for i in range(len(recommender.dataset)):
+        lang = recommender.dataset["original_language"][i]
+        language_counts[lang] = language_counts.get(lang, 0) + 1
+
+    sorted_languages = sorted(language_counts.items(), key=lambda x: x[1], reverse=True)
+    languages = [language for language, _ in sorted_languages]
 
     return languages
 

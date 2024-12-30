@@ -1,6 +1,6 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from service import proceedMovieRecommendation, proceedMovieDescription, proceedAvailableLanguages
+from service import proceedMovieRecommendation, proceedMovieDescription, proceedAvailableLanguages, proceedAvailableGenres
 from inputTypes import GetMovieRecommendationsInput, GetMovieDescriptionInput
 
 app = FastAPI()
@@ -19,6 +19,11 @@ app.add_middleware(
 def read_root():
     return {"Advanced": "Information Retrieval"}
 
+@app.get("/availableGenres")
+def available_genres():
+    genres = proceedAvailableGenres()
+    return {"genres": genres}
+
 @app.get("/availableLanguages")
 def available_languages():
     languages = proceedAvailableLanguages()
@@ -36,4 +41,3 @@ def movie_description(input: GetMovieDescriptionInput):
     movie_description = proceedMovieDescription(input)
     print(movie_description)
     return {"genre": movie_description["genre"], "summary": movie_description["summary"]}
-

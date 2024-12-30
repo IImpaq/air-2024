@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { LanguageOption } from "@/lib/types";
 
@@ -11,16 +10,12 @@ interface LanguageStepProps {
 }
 
 const LanguageStep = ({ languages, value, onChange }: LanguageStepProps) => {
-  const [hoveredOption, setHoveredOption] = useState<string | null>(null);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
       {languages.map((language) => (
         <motion.button
           key={language.id}
           onClick={() => onChange(language.id)}
-          onHoverStart={() => setHoveredOption(language.id)}
-          onHoverEnd={() => setHoveredOption(null)}
           className="group relative text-left"
         >
           <motion.div
