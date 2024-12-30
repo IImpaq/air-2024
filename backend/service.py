@@ -1,8 +1,6 @@
 from recommender import MovieRecommender
-from mockData import moviesMock, descriptionMock
 from inputTypes import GetMovieRecommendationsInput, GetMovieDescriptionInput
 from subtitles import initializeOpensubtitles, downloadAndSaveSubtitle, checkSubtitleFile, summarizeSubtitles, extractKeyThemes
-import time
 
 recommender = MovieRecommender("../data/movies_dataset_preprocessed.csv")
 
