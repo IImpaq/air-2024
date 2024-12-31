@@ -75,11 +75,11 @@ python evaluation.py
 
 ## :books: Dataset
 
-Already included is the preprocessed dataset. It includes around 180.000 rows and the following columns: 
+Already included is the preprocessed dataset. It includes around 180.000 rows and the following columns:
 ```js
 ["id", "title", "genres", "original_language", "overview", "popularity", "vote_average", "release_date", "status", "keywords", "credits", "poster_path"]
 ```
-The preprocessed dataset is generated from the raw data of the [wykonos/movies](https://huggingface.co/datasets/wykonos/movies) collection that is published on [Hugging Face](https://huggingface.co/). 
+The preprocessed dataset is generated from the raw data of the [wykonos/movies](https://huggingface.co/datasets/wykonos/movies) collection that is published on [Hugging Face](https://huggingface.co/).
 
 ## 🛠️ Tech Stack
 
@@ -98,6 +98,9 @@ MIT License (see [LICENSE.MD](LICENSE.md)).
 - [Questionnaire](questionnaire/questionnaire.pdf)
 - [Evaluation](evaluation/)
 - [Movie Dataset](https://huggingface.co/datasets/wykonos/movies)
+
+## ☎️ Contact
+If you have any questions or want to get in touch, just [send me an email](mailto:iimpaq@proton.me)
 
 ---
 Made with ❤️
