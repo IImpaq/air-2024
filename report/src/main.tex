@@ -1,22 +1,17 @@
 \documentclass[12pt,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{listings}
 \usepackage{float}
 \usepackage[margin=2.5cm]{geometry}
+\usepackage{listings}
 \usepackage{subfiles}
-
-
-\usepackage{natbib} 
+\usepackage{natbib}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{enumitem}
 \usepackage{nameref}
 \usepackage{booktabs}
-%\usepackage{listings}
 \usepackage{algorithm,algorithmic}
 \usepackage{mathtools}
 \usepackage{placeins}
@@ -24,7 +19,7 @@
 \usepackage{bm}
 \usepackage{stfloats}
 \usepackage{rotating}
-\usepackage{libertine} 
+\usepackage{libertine}
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{xcolor}
@@ -36,15 +31,15 @@
 \subfile{title}
 
 \begin{abstract}
-\noindent \small 
-This project develops a user-centric movie recommendation system to address content discovery challenges in the 
-digital entertainment landscape. With the overwhelming variety of content across streaming platforms, 
-users often struggle to find relevant movies. Existing systems prioritize platform metrics over personalization. 
-Our approach uses a transformer-based architecture to process natural language queries, generating personalized 
-recommendations with minimal effort. The system combines semantic analysis, TF-IDF similarity, and emotion 
-analysis to deliver relevant suggestions, while also considering popularity metrics. Experimental results 
-show high precision (98.78\%) and acceptable response times, with room for improvement in recall. 
-This modular system can be easily integrated into existing platforms, enhancing user experience and 
+\noindent \small
+This project develops a user-centric movie recommendation system to address content discovery challenges in the
+digital entertainment landscape. With the overwhelming variety of content across streaming platforms,
+users often struggle to find relevant movies. Existing systems prioritize platform metrics over personalization.
+Our approach uses a transformer-based architecture to process natural language queries, generating personalized
+recommendations with minimal effort. The system combines semantic analysis, TF-IDF similarity, and emotion
+analysis to deliver relevant suggestions, while also considering popularity metrics. Experimental results
+show high precision (98.78\%) and acceptable response times, with room for improvement in recall.
+This modular system can be easily integrated into existing platforms, enhancing user experience and
 content discovery.
 \end{abstract}
 
@@ -135,10 +130,10 @@ The system evluates recommendations based on five key parts:
   \item Final ranking selects top recommendations based on weighted scores.
 \end{itemize}
 
-\noindent To further improve the user experience, we integrated subtitle analysis using the facebook/bart-large-cnn model. 
-The subtitles of movies were sourced from OpenSubtitles API\footnote{\label{OpenSubtitles}OpenSubtitles. December 2024. url: https://www.opensubtitles.org}., pre-processed and run through the summary model to create an introductory summary of each movie. 
-The summary model only processes the beginning of the subtitles so that it gives users an insight into the movie without spoilers. 
-In addition, KeyBERT was used to extract three key themes from the subtitles and present them to the user. 
+\noindent To further improve the user experience, we integrated subtitle analysis using the facebook/bart-large-cnn model.
+The subtitles of movies were sourced from OpenSubtitles API\footnote{\label{OpenSubtitles}OpenSubtitles. December 2024. url: https://www.opensubtitles.org}., pre-processed and run through the summary model to create an introductory summary of each movie.
+The summary model only processes the beginning of the subtitles so that it gives users an insight into the movie without spoilers.
+In addition, KeyBERT was used to extract three key themes from the subtitles and present them to the user.
 \newline \\
 \noindent This system is well-suited for streaming platform recommendation engines, personalized content curation, movie discovery and educational purposes.
 Due to it's modular design (frontend / backend strictly separated) it can be easily integrated into existing systems.
@@ -165,9 +160,8 @@ The evaluation script also measured statistical metrics like precision, recall a
 We are going to use the rest of this section to discuss the most relevant metrics and results of the evaluation.
 The evaluation script was called with the following parameters:
 \begin{itemize}
-  \item use randomly sampled 20\% of the full dataset for evaluation
-  \item run each test case 2 times and take the average
-  \item sample 1000 testcases from all generated tests to evaluate the system
+  \item use randomly sampled 40\% of the full dataset for evaluation which yields approximately 583k movies (data rows)
+  \item sample 600 testcases from all possible input combinations and run each testcase 2 times, which results in 1200 test runs
 \end{itemize}
 
 \noindent The script was executed on a MacBook Pro 14" with a M3 Pro chip and 18GB of RAM in a Python 3.12.6 environment.
@@ -176,37 +170,40 @@ In the following figure we can see the distribution of response times of the rec
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{../assets/response_time_dist.png}
-  \caption{Response time}
+  \caption{Response time distribution of 1200 test runs on approx. 583k rows (in seconds)}
 \end{figure}
 
-\noindent This figure shows that sometimes the system is unable to provide results which causes a nearly instant response.
-In a majority of the cases the system is able to provide results within 4 seconds which is reasonable given the complexity of the system and the used hardware.
-There are also some outliers which have taken more than 10 seconds to provide results.
-In the next figure we can see the distribution of confidence scores of the recommendation system.
+\noindent This figure clearly shows that most of the recomendations are processed within at most 10 seconds.
+This is a reasonable response time given the complexity of the system and the used hardware.
+Nonetheless there are some outliers which have taken more than 15 or even 25 seconds to provide results.
+This is also validated when looking at the raw data, where the average response time is 6.69 seconds.
+The median on the other hand is 3.60 seconds which is a good indicator that the average is skewed by outliers.
+The high variability in response times can also be validated by looking at the standard deviation of 7.32 seconds.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{../assets/confidence_dist.png}
-  \caption{Confidence score}
+  \caption{Confidence score distribution of 1200 test runs on approx. 583k rows (in \%)}
 \end{figure}
 
-\noindent The figure shows that the system mostly has a confidence score of 42\% which could be better.
+\noindent The figure shows that the system has an average confidence score of 46.55\% which could be better.
+Nonetheless, the subjective evaluation through the questionnaire showed that the recommendations at approximately 45\% confidence score were still deemed as valuable.
 In the last figure we can see the distribution of genre distribution of the recommendation system visualized in a histogram.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{../assets/top_genres.png}
-  \caption{Genre distribution histogram}
+  \caption{Genre distribution histogram of 1200 test runs on approx. 583k rows (in no. recommendations)}
 \end{figure}
 
 \noindent The figure clearly shows that the system is able to recommend movies from a wide variety of genres.
 Some are recommended more often than others, but the system does not show a clear bias towards a specific genre.
 \newline \noindent If we take a look at the statistical metrics we can see that the system performs quite well.
-The precision of the system is 98.78\% which indicates that the system is very good at recommending movies that the user likes.
-The recall of the system is 21.96\% which indicates that the system might be missing out on some movies that the user likes.
-The F1-score of the system is 29.17\% which is relatively low, but was expected due to the low recall.
-
-The mentioned values, complete results as well as other plots can be found in the evaluation folder within the \href{https://github.com/IImpaq/air-2024/evaluation}{project repository}.
+The precision of the system is 99.08\% which indicates that the system is very good at recommending movies that the user likes.
+The recall of the system is 10.10\% which indicates that the system might be missing out on some movies that the user likes.
+The low recall may be explainable due to us sampling a small number of movies after pre-filtering to add variety in the recommendations.
+The F1-score of the system is 14.38\% which is relatively low, but was expected due to drag-down caused by the low recall.
+\newline \noindent The mentioned values, complete results as well as other plots can be found in the evaluation folder within the \href{https://github.com/IImpaq/air-2024/evaluation}{project repository}.
 
 \section{Conclusion}
 
