@@ -73,10 +73,12 @@ cd backend
 python evaluation.py
 ```
 
-## :page_with_curl: Dataset
+## :books: Dataset
 
 Already included is the preprocessed dataset. It includes around 180.000 rows and the following columns: 
-["id", "title", "genres", "original_language", "overview", "popularity", "vote_average", "release_date", "status", "keywords", "credits", "poster_path"].
+```js
+["id", "title", "genres", "original_language", "overview", "popularity", "vote_average", "release_date", "status", "keywords", "credits", "poster_path"]
+```
 The preprocessed dataset is generated from the raw data of the [wykonos/movies](https://huggingface.co/datasets/wykonos/movies) collection that is published on [Hugging Face](https://huggingface.co/). 
 
 ## 🛠️ Tech Stack
