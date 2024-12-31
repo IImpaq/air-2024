@@ -12,23 +12,28 @@ import sys
 import time
 
 class MovieRecommenderEvaluation:
-    def __init__(self, recommender: MovieRecommender, cwd = "../evaluation/"):
+    def __init__(self, recommender, cwd = "../evaluation/"):
         if not os.path.exists(cwd):
             print(f"Evaluation directory does not exist: {cwd}")
             sys.exit(1)
 
-        self.recommender = recommender
-        self.cwd = cwd
-        self.results = {
-            "response_times": [],
-            "genre_variety": [],
-            "confidence_scores": [],
-            "rating_distribution": [],
-            "genre_distribution": {},
-            "precision": [],
-            "recall": [],
-            "f1_scores": []
-        }
+        if recommender is None:
+            with open(cwd + "results.json", "r") as f:
+                self.results = json.load(f)
+                self.cwd = cwd
+        else:
+            self.recommender = recommender
+            self.cwd = cwd
+            self.results = {
+                "response_times": [],
+                "genre_variety": [],
+                "confidence_scores": [],
+                "rating_distribution": [],
+                "genre_distribution": {},
+                "precision": [],
+                "recall": [],
+                "f1_scores": []
+            }
 
     def run(self, test_cases, num_iterations = 3):
         print("Running evaluation...")
@@ -176,30 +181,33 @@ class MovieRecommenderEvaluation:
     def summary(self):
         print("="*50 + " SUMMARY " + "="*50)
 
-        print("\nResponse Time Statistics:")
+        print("\nResponse Time:")
         print(f"\t- Average: {self.results["metrics"]["avg_response_time"]:.2f} seconds")
         print(f"\t- Standard Deviation: {self.results["metrics"]["std_response_time"]:.2f} seconds")
         print(f"\t- Min: {min(self.results["response_times"]):.2f} seconds")
         print(f"\t- Median: {np.median(self.results["response_times"]):.2f} seconds")
         print(f"\t- Max: {max(self.results["response_times"]):.2f} seconds")
 
-        print("\nGenre Diversity Statistics:")
-        print(f"\t- Average genres per recommendation: {self.results["metrics"]["avg_genre_variety"]:.2f}")
+        print("\nGenre Diversity (per Recommendation):")
+        print(f"\t- Average: {self.results["metrics"]["avg_genre_variety"]:.2f}")
         print(f"\t- Standard Deviation: {self.results["metrics"]["std_genre_variety"]:.2f}")
-        print(f"\t- Min genres: {min(self.results["genre_variety"])}")
-        print(f"\t- Max genres: {max(self.results["genre_variety"])}")
+        print(f"\t- Min: {min(self.results["genre_variety"])}")
+        print(f"\t- Med: {np.median(self.results["genre_variety"])}")
+        print(f"\t- Max: {max(self.results["genre_variety"])}")
 
-        print("\nConfidence Score Statistics:")
-        print(f"\t- Average confidence: {self.results["metrics"]["avg_confidence"]:.2%}")
+        print("\nConfidence Score:")
+        print(f"\t- Average: {self.results["metrics"]["avg_confidence"]:.2%}")
         print(f"\t- Standard Deviation: {self.results["metrics"]["std_confidence"]:.2%}")
-        print(f"\t- Min confidence: {min(self.results["confidence_scores"]):.2%}")
-        print(f"\t- Max confidence: {max(self.results["confidence_scores"]):.2%}")
+        print(f"\t- Min: {min(self.results["confidence_scores"]):.2%}")
+        print(f"\t- Median: {np.median(self.results["confidence_scores"]):.2%}")
+        print(f"\t- Max: {max(self.results["confidence_scores"]):.2%}")
 
-        print("\nRating Statistics:")
-        print(f"\t- Average rating: {self.results["metrics"]["avg_rating"]:.2f}")
+        print("\nRating:")
+        print(f"\t- Average: {self.results["metrics"]["avg_rating"]:.2f}")
         print(f"\t- Standard Deviation: {self.results["metrics"]["std_rating"]:.2f}")
-        print(f"\t- Min rating: {min(self.results["rating_distribution"]):.2f}")
-        print(f"\t- Max rating: {max(self.results["rating_distribution"]):.2f}")
+        print(f"\t- Min: {min(self.results["rating_distribution"]):.2f}")
+        print(f"\t- Median: {np.median(self.results["rating_distribution"]):.2f}")
+        print(f"\t- Max: {max(self.results["rating_distribution"]):.2f}")
 
 
         print("\nTop 5 Most Recommended Genre Combinations:")
@@ -254,6 +262,15 @@ def main():
         print("Usage: python evaluation.py <dataset_percent> <iterations_per_test> <num_test_cases (optional)>")
         print("Example: python evaluation.py 0.1 3 50")
         sys.exit(1)
+
+    # Check if results.json exists
+    if os.path.exists("../evaluation/results.json"):
+        print("Results file already exists...just generating summary.")
+        print("Please delete or move it to re-run evaluation.")
+        evaluator = MovieRecommenderEvaluation(None)
+        evaluator._plot()
+        evaluator.summary()
+        sys.exit(0)
 
     test_cases = load_or_generate_testcases()
 

@@ -1,29 +1,30 @@
-================================================== SUMMARY ==================================================
-
-Response Time Statistics:
+Response Time:
 	- Average: 6.69 seconds
 	- Standard Deviation: 7.32 seconds
 	- Min: 0.06 seconds
 	- Median: 3.60 seconds
 	- Max: 29.92 seconds
 
-Genre Diversity Statistics:
-	- Average genres per recommendation: 3.80
+Genre Diversity (per Recommendation):
+	- Average: 3.80
 	- Standard Deviation: 0.51
-	- Min genres: 1
-	- Max genres: 4
+	- Min: 1
+	- Med: 4.0
+	- Max: 4
 
-Confidence Score Statistics:
-	- Average confidence: 46.55%
+Confidence Score:
+	- Average: 46.55%
 	- Standard Deviation: 12.94%
-	- Min confidence: 0.00%
-	- Max confidence: 95.13%
+	- Min: 0.00%
+	- Median: 43.36%
+	- Max: 95.13%
 
-Rating Statistics:
-	- Average rating: 6.84
+Rating:
+	- Average: 6.84
 	- Standard Deviation: 0.81
-	- Min rating: 3.00
-	- Max rating: 9.75
+	- Min: 3.00
+	- Median: 6.90
+	- Max: 9.75
 
 Top 5 Most Recommended Genre Combinations:
 	- Drama: 1821 recommendations
