@@ -111,6 +111,11 @@ The system evluates recommendations based on five key parts:
   \item Final ranking selects top recommendations based on weighted scores.
 \end{itemize}
 
+\noindent To further improve the user experience, we integrated subtitle analysis using the facebook/bart-large-cnn model. 
+The subtitles of movies were sourced from OpenSubtitles API\footnote{\label{OpenSubtitles}OpenSubtitles. December 2024. url: https://www.opensubtitles.org}., pre-processed and run through the summary model to create an introductory summary of each movie. 
+The summary model only processes the beginning of the subtitles so that it gives users an insight into the movie without spoilers. 
+In addition, KeyBERT was used to extract three key themes from the subtitles and present them to the user. 
+\newline \\
 \noindent This system is well-suited for streaming platform recommendation engines, personalized content curation, movie discovery and educational purposes.
 Due to it's modular design (frontend / backend strictly separated) it can be easily integrated into existing systems.
 The frontend is optionally deployable as the backend can be integrated into any existing system due to interfacing

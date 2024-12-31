@@ -1,5 +1,6 @@
 from collections import Counter
 from inputTypes import GetMovieRecommendationsInput
+from itertools import combinations
 import json
 import matplotlib.pyplot as plt
 import numpy as np
@@ -223,13 +224,13 @@ def load_or_generate_testcases(cwd = "../evaluation/"):
         for mood in preferences["moods"]:
             for era in preferences["eras"]:
                 for language in preferences["languages"]:
-                    for genre1 in preferences["genres"]:
-                        for genre2 in preferences["genres"]:
+                    for n in range(1, 5):
+                        for genre_combo in combinations(preferences["genres"], n):
                             test_case = {
                                 "mood": mood,
                                 "era": era,
                                 "language": language,
-                                "genres": [genre1, genre2] if genre1 != genre2 else [genre1],
+                                "genres": list(genre_combo),
                                 "additionalNotes": ""
                             }
                             test_cases.append(test_case)

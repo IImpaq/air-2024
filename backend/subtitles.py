@@ -116,9 +116,9 @@ def summarizeSubtitles(text):
         print("Fallback to CPU")
         device = torch.device("cpu")
 
-    summarizer = pipeline("summarization", model="google/long-t5-tglobal-base", device=device)
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=device)
 
-    chunk_size = 4096
+    chunk_size = 1024
     first_chunk = text[:chunk_size] 
 
     result = summarizer(first_chunk, max_length=MAX_SUM_LENGTH, min_length=MIN_SUM_LENGTH, do_sample=SAMPLE_SUM)
