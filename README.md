@@ -1,4 +1,4 @@
-<h1 align="center">Movie Finder 🎞️</h1>
+<h1 align="center">Movie Finder :film_strip:</h1>
 
 A intelligent movie recommendation system that uses advanced techniques to recommend movies based on your preferences.
 
@@ -6,7 +6,7 @@ A intelligent movie recommendation system that uses advanced techniques to recom
   <img src="assets/hero.gif" alt="Hero Trailer Video" width="100%">
 </p>
 
-## ✨ Key Features
+## :sparkles: Key Features
 
 - Platform-independent movie recommendations
 - Genre Selection
@@ -15,15 +15,15 @@ A intelligent movie recommendation system that uses advanced techniques to recom
 - Language Decision
 - Notes for in-depth personalization
 
-## 🚀 Getting Started
+## :rocket: Getting Started
 
-### Prerequisites
+### :computer: Prerequisites
 
 - Git
 - Bun.js
 - Python 3.12
 
-### Installation
+### :package: Installation
 
 ```bash
 # Clone the repository
@@ -43,7 +43,7 @@ bun install
 cd ..
 ```
 
-### Running
+### :gear: Running
 
 **Full-Stack Application**
 
@@ -81,16 +81,16 @@ Already included is the preprocessed dataset. It includes around 180.000 rows an
 ```
 The preprocessed dataset is generated from the raw data of the [wykonos/movies](https://huggingface.co/datasets/wykonos/movies) collection that is published on [Hugging Face](https://huggingface.co/).
 
-## 🛠️ Tech Stack
+## :wrench: Tech Stack
 
 - Frontend: NextJS & TypeScript
 - Backend: Python, FastAPI & PyTorch
 
-## 📝 License
+## :memo: License
 
 MIT License (see [LICENSE.MD](LICENSE.md)).
 
-## 🔗 Links
+## :link: Links
 
 - [Design Document](design-document/design-document.pdf)
 - [Report](report/report.pdf)
@@ -99,8 +99,8 @@ MIT License (see [LICENSE.MD](LICENSE.md)).
 - [Evaluation](evaluation/)
 - [Movie Dataset](https://huggingface.co/datasets/wykonos/movies)
 
-## ☎️ Contact
+## :telephone: Contact
 If you have any questions or want to get in touch, just [send me an email](mailto:iimpaq@proton.me)
 
 ---
-Made with ❤️
+Made with :heart:
