@@ -3,7 +3,7 @@
 A intelligent movie recommendation system that uses advanced techniques to recommend movies based on your preferences.
 
 <p align="center">
-  <img src="assets/hero.gif" alt="Hero Trailer Video" width="600px">
+  <img src="assets/hero.gif" alt="Hero Trailer Video" width="100%">
 </p>
 
 ## ✨ Key Features
