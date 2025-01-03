@@ -20,7 +20,7 @@ A intelligent movie recommendation system that uses advanced techniques to recom
 ### :computer: Prerequisites
 
 - Git
-- Bun.js
+- Bun.js (OR: npm & node)
 - Python 3.12
 
 ### :package: Installation
@@ -39,7 +39,7 @@ cd ..
 
 # Prepare the frontend
 cd frontend
-bun install
+bun install # OR: npm install
 cd ..
 ```
 
