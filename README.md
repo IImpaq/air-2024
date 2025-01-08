@@ -1,4 +1,4 @@
-<h1 align="center">Movie Finder :film_strip:</h1>
+<h1 align="center">:film_strip: Movie Finder :film_strip:</h1>
 
 A intelligent movie recommendation system that uses advanced techniques to recommend movies based on your preferences.
 
@@ -86,10 +86,6 @@ The preprocessed dataset is generated from the raw data of the [wykonos/movies](
 - Frontend: NextJS & TypeScript
 - Backend: Python, FastAPI & PyTorch
 
-## :memo: License
-
-MIT License (see [LICENSE.MD](LICENSE.md)).
-
 ## :link: Links
 
 - [Design Document](design-document/design-document.pdf)
@@ -104,6 +100,10 @@ MIT License (see [LICENSE.MD](LICENSE.md)).
 - **Marcus Gugacs:** Design Document, Frontend, Recommender, CLI, Evaluation, Questionnaire, Report, Presentation
 - **Martin Tobias Klug:** Design Document, Subtitle Fetching, Summarization Pipeline, Report
 - **Lukas Leitner:** Design Document, Data Preprocessing, Report, Presentation
+
+## :memo: License
+
+MIT License (see [LICENSE](LICENSE.md)).
 
 ## :telephone: Contact
 If you have any questions or want to get in touch, just [send an email](mailto:iimpaq@proton.me)
