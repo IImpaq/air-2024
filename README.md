@@ -21,14 +21,14 @@ A intelligent movie recommendation system that uses advanced techniques to recom
 
 - Git
 - Bun.js (OR: npm & node)
-- Python 3.12
+- Python 3.11+
 
 ### :package: Installation
 
 ```bash
 # Clone the repository
-git clone git@github.com:IImpaq/air-2024.git
-cd air-2024
+git clone git@github.com:IImpaq/movie-finder.git
+cd movie-finder
 
 # Prepare the backend
 cd backend
@@ -54,7 +54,7 @@ bun run dev # Website Available at http://localhost:3000
 
 # Terminal 2: Start Backend
 cd backend
-uvicorn main:app --reload  # API available at http://localhost:8000
+uvicorn app:app --reload  # API available at http://localhost:8000
 ```
 
 **CLI Mode**
@@ -99,8 +99,14 @@ MIT License (see [LICENSE.MD](LICENSE.md)).
 - [Evaluation](evaluation/)
 - [Movie Dataset](https://huggingface.co/datasets/wykonos/movies)
 
+## :brain: Team & Roles
+- **Patrick Eckel:** Design Document, Frontend, Data Transfer
+- **Marcus Gugacs:** Design Document, Frontend, Recommender, CLI, Evaluation, Questionnaire, Report, Presentation
+- **Martin Tobias Klug:** Design Document, Subtitle Fetching, Summarization Pipeline, Report
+- **Lukas Leitner:** Design Document, Data Preprocessing, Report, Presentation
+
 ## :telephone: Contact
-If you have any questions or want to get in touch, just [send me an email](mailto:iimpaq@proton.me)
+If you have any questions or want to get in touch, just [send an email](mailto:iimpaq@proton.me)
 
 ---
 Made with :heart:
