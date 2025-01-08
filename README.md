@@ -90,7 +90,8 @@ The preprocessed dataset is generated from the raw data of the [wykonos/movies](
 
 - [Design Document](design-document/design-document.pdf)
 - [Report](report/report.pdf)
-- [Presentation](presentation/presentation.pdf)
+- [Short Presentation](presentation/short-presentation.pdf)
+- [Full Presentation](presentation/full-presentation.pdf)
 - [Questionnaire](questionnaire/questionnaire.pdf)
 - [Evaluation](evaluation/)
 - [Movie Dataset](https://huggingface.co/datasets/wykonos/movies)
